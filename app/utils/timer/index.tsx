@@ -15,23 +15,24 @@ export const formatElapsed: (number) => string = (elapsed) => {
 }
 
 export const firstEvent: (
-  desiredType: EventType,
-  timer: BreadTimer
-) => RawEvent | NullEvent = (desiredType, timer) => (
+  timer: BreadTimer,
+  desiredType: EventType
+) => RawEvent | NullEvent = (timer, desiredType) => (
   timer.find(({ type }) => desiredType === type) ||
   { type: desiredType, occurredAt: null }
 )
 
 export const filterForType: (
-  desiredType: EventType,
-  timer: BreadTimer
-) => RawEvent[] = (desiredType, timer) =>
+  timer: BreadTimer,
+  desiredType: EventType
+) => RawEvent[] = (timer, desiredType) =>
   timer.filter(({ type }) => desiredType === type)
 
 export const hasEvent: (
   timer: BreadTimer,
   eventType: EventType
-) => boolean = (timer) => firstEvent(EventType.START, timer).occurredAt !== null
+) => boolean = (timer, eventType) =>
+  firstEvent(timer, eventType).occurredAt !== null
 
 export const addEvent: (
   timer: BreadTimer,
@@ -45,17 +46,3 @@ export const addEvent: (
     { type: eventType, occurredAt },
   ]
 }
-
-// interface FoldInfo {
-//   fold: RawEvent,
-//   prevFold: 
-// }
-// export const getFolds: (
-//   timer: BreadTimer
-// ): RawEvent[] = (timer) => {
-//   const mixEvent = firstEvent(EventType.MIX, timer)
-//   if (!mixEvent) return []
-//   const folds = filterForType(FOLD, timer).reduce(([folds, prevFold], fold) => {
-//     return []
-//   }, [[], mixEvent])
-// }

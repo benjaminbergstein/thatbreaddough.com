@@ -20,7 +20,11 @@ import {
   firstEvent,
   filterForType,
   addEvent,
+  hasEvent,
 } from '../../utils/timer'
+
+import Header from './Header'
+import EventTimer from './EventTimer'
 
 const {
   START,
@@ -28,57 +32,17 @@ const {
   AUTOLYSE,
   MIX,
   FOLD,
+  SALT,
+  BULK,
+  PRESHAPE,
+  PROOF,
+  STEAM,
+  BAKE,
 } = EventType
-
-const EventTimer: React.FC<any> = ({
-  tick,
-  startEvent,
-  endEvent = { occurredAt: null },
-  targetEvent,
-  captureEvent
-}) => {
-  const { type: eventType, occurredAt } = targetEvent
-  const { occurredAt: startedAt } = startEvent
-  const { occurredAt: endedAt } = endEvent
-  const sinceStart = occurredAt - startedAt
-  const hasEnded = endedAt !== null
-  const elapsed = (endedAt || tick)- occurredAt
-
-  return (
-    <>
-      <Box height={{ min: "3rem" }} justify="center" align="center">
-        {occurredAt === null && (
-          <Button
-            size="small"
-            label={eventType}
-            onClick={() => captureEvent(eventType)}
-          />
-        )}
-        {occurredAt !== null && <Text color="dark-2">
-          {eventType}
-        </Text>}
-      </Box>
-
-      <Box justify="center" align="center">
-        <Text color="dark-2">
-          {occurredAt !== null ? formatElapsed(sinceStart) : "-"}
-        </Text>
-      </Box>
-      <Box justify="center" align="center">
-        <Text color="dark-2">
-          {occurredAt !== null ? formatElapsed(elapsed) : "-"}
-          {hasEnded && <Text color="green">
-            <span dangerouslySetInnerHTML={{ __html: '&nbsp;&check;'}} />
-          </Text>}
-        </Text>
-      </Box>
-    </>
-  )
-}
 
 const Timer: React.FC<any> = () => {
   const [timer, setTimer] = useState<BreadTimer>([])
-  const startEvent = firstEvent(START, timer)
+  const startEvent = firstEvent(timer, START)
   const [tick, setTick] = useState<number>(+new Date())
 
   const captureEvent: (type: EventType) => void = (type) => {
@@ -94,53 +58,87 @@ const Timer: React.FC<any> = () => {
     return () => { clearInterval(interval) }
   }, [timer])
 
-  const mixEvent = firstEvent(MIX, timer)
-  const folds = mixEvent ? filterForType(FOLD, timer) : []
+  const mixEvent = firstEvent(timer, MIX)
+  const bulkEvent = firstEvent(timer, BULK)
+  const folds = mixEvent ? filterForType(timer, FOLD) : []
   const foldBasis = folds.slice(-1)[0] || mixEvent
+
+
+  const preshapeEvent = firstEvent(timer, PRESHAPE)
+  const proofEvent = firstEvent(timer, PROOF)
+  const steamEvent = firstEvent(timer, STEAM)
+  const bakeEvent = firstEvent(timer, BAKE)
 
   return (
     <Grid fill="horizontal" columns={['1/3', '1/3', '1/3']}>
-      <Box justify="center" align="center">Event</Box>
-      <Box justify="center" align="center">Occurred at</Box>
-      <Box justify="center" align="center">Elapsed</Box>
+      <Header />
       <EventTimer
         tick={tick}
         startEvent={startEvent}
-        endEvent={firstEvent(MIX, timer)}
-        targetEvent={firstEvent(LEVAIN, timer)}
+        endEvent={firstEvent(timer, MIX)}
+        targetEvent={firstEvent(timer, LEVAIN)}
         captureEvent={captureEvent}
       />
       <EventTimer
         tick={tick}
         startEvent={startEvent}
-        endEvent={firstEvent(MIX, timer)}
-        targetEvent={firstEvent(AUTOLYSE, timer)}
+        endEvent={firstEvent(timer, MIX)}
+        targetEvent={firstEvent(timer, AUTOLYSE)}
         captureEvent={captureEvent}
       />
       <EventTimer
         tick={tick}
         startEvent={startEvent}
-        targetEvent={firstEvent(MIX, timer)}
+        targetEvent={firstEvent(timer, MIX)}
         captureEvent={captureEvent}
+        disabled={!hasEvent(timer, LEVAIN)}
       />
-      {mixEvent.occurredAt !== null && (
-        <>
-          {folds.map((fold, index) => (
-            <EventTimer
-              tick={tick}
-              startEvent={index === 0 ? mixEvent : folds[index - 1]}
-              targetEvent={fold}
-              captureEvent={captureEvent}
-            />
-          ))}
-          <EventTimer
-            tick={tick}
-            startEvent={startEvent}
-            targetEvent={{ type: FOLD, occurredAt: null}}
-            captureEvent={captureEvent}
-          />
-        </>
-      )}
+      <EventTimer
+        tick={tick}
+        startEvent={firstEvent(timer, MIX)}
+        targetEvent={firstEvent(timer, SALT)}
+        captureEvent={captureEvent}
+        disabled={!hasEvent(timer, MIX)}
+      />
+      {folds.map((fold, index) => (
+        <EventTimer
+          tick={tick}
+          startEvent={index === 0 ? mixEvent : folds[index - 1]}
+          endEvent={folds[index + 1] || bulkEvent}
+          targetEvent={fold}
+          captureEvent={captureEvent}
+        />
+      ))}
+      {bulkEvent.occurredAt === null && <EventTimer
+        tick={tick}
+        startEvent={startEvent}
+        targetEvent={{ type: FOLD, occurredAt: null}}
+        captureEvent={captureEvent}
+        disabled={!hasEvent(timer, MIX)}
+      />}
+      <EventTimer
+        tick={tick}
+        startEvent={folds.slice(-1)[0] || { occurredAt: null }}
+        endEvent={preshapeEvent}
+        targetEvent={bulkEvent}
+        captureEvent={captureEvent}
+        disabled={!hasEvent(timer, FOLD)}
+      />
+      <EventTimer
+        tick={tick}
+        startEvent={bulkEvent}
+        endEvent={proofEvent}
+        targetEvent={firstEvent(timer, PRESHAPE)}
+        captureEvent={captureEvent}
+        disabled={'auto'}
+      />
+      <EventTimer
+        tick={tick}
+        startEvent={firstEvent(timer, PRESHAPE)}
+        targetEvent={firstEvent(timer, PROOF)}
+        captureEvent={captureEvent}
+        disabled={'auto'}
+      />
     </Grid>
   )
 }

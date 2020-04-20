@@ -2,9 +2,14 @@ export enum EventType {
   START = 'start',
   LEVAIN = 'levain build',
   AUTOLYSE = 'autolyse',
-  SALT = 'salt',
+  SALT = 'salt added',
   MIX =  'levain added',
   FOLD = 'fold',
+  BULK = 'bulk',
+  PRESHAPE = 'preshape',
+  PROOF = 'proof',
+  STEAM = 'bake with steam',
+  BAKE = 'bake',
 }
 
 export interface RawEvent {
