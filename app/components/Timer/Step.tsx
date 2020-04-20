@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaCheckCircle, FaStepForward } from 'react-icons/fa'
 import {
   Text,
   Box,
@@ -9,6 +10,8 @@ import {
   formatElapsed,
 } from '../../utils/timer'
 
+import { EventType } from '../../utils/timer/types'
+
 const Step: React.FC<any> = ({
   tick,
   startEvent,
@@ -18,20 +21,24 @@ const Step: React.FC<any> = ({
   disabled: disabledSetting,
 }) => {
   const { type: eventType, occurredAt } = targetEvent
+  const isDoneEvent = eventType === EventType.END
   const { occurredAt: startedAt } = startEvent
   const { occurredAt: endedAt } = endEvent
   const sinceStart = occurredAt - startedAt
-  const hasEnded = endedAt !== null
-  const elapsed = (endedAt || tick)- occurredAt
+  const hasEnded = endedAt !== null || (occurredAt !== null && isDoneEvent)
+  const elapsed = (endedAt || tick) - occurredAt
+
+  const wasSkipped = hasEnded && !occurredAt && !isDoneEvent
 
   const disabled = disabledSetting === true || (
     disabledSetting === 'auto' && !startEvent.occurredAt
   )
 
+
   return (
     <>
       <Box height={{ min: "3rem" }} justify="center" align="center">
-        {occurredAt === null && (
+        {occurredAt === null && !wasSkipped && (
           <Button
             disabled={disabled}
             size="small"
@@ -39,23 +46,31 @@ const Step: React.FC<any> = ({
             onClick={() => captureEvent(eventType)}
           />
         )}
-        {occurredAt !== null && <Text color="dark-2">
+        {(occurredAt !== null || wasSkipped) && <Text color="dark-2">
           {eventType}
         </Text>}
       </Box>
 
       <Box justify="center" align="center">
         <Text color="dark-2">
-          {occurredAt !== null ? formatElapsed(sinceStart) : "-"}
+          {wasSkipped === false && (occurredAt !== null ? formatElapsed(sinceStart) : '-')}
+          {wasSkipped && <Text size="small" color="dark-4">
+            <FaStepForward />
+          </Text>}
         </Text>
       </Box>
       <Box justify="center" align="center">
         <Text color="dark-2">
-          {occurredAt !== null ? formatElapsed(elapsed) : "-"}
-          {hasEnded && <Text color="green">
-            <span dangerouslySetInnerHTML={{ __html: '&nbsp;&check;'}} />
+          {!isDoneEvent && occurredAt !== null && formatElapsed(elapsed)}
+          {(isDoneEvent || (occurredAt === null && wasSkipped !== true)) && '-'}
+          {!wasSkipped && hasEnded && <Text size="small" color="green">
+            <span>&nbsp;&nbsp;</span><FaCheckCircle />
           </Text>}
         </Text>
+
+        {wasSkipped && <Text size="small" color="dark-4">
+          <span>skipped</span>
+        </Text>}
       </Box>
     </>
   )

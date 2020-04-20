@@ -38,6 +38,7 @@ const {
   PROOF,
   STEAM,
   BAKE,
+  END,
 } = EventType
 
 const Timer: React.FC<any> = () => {
@@ -68,6 +69,7 @@ const Timer: React.FC<any> = () => {
   const proofEvent = firstEvent(timer, PROOF)
   const steamEvent = firstEvent(timer, STEAM)
   const bakeEvent = firstEvent(timer, BAKE)
+  const doneEvent = firstEvent(timer, END)
 
   return (
     <Grid fill="horizontal" columns={['1/3', '1/3', '1/3']}>
@@ -89,6 +91,7 @@ const Timer: React.FC<any> = () => {
       <Step
         tick={tick}
         startEvent={startEvent}
+        endEvent={bakeEvent}
         targetEvent={firstEvent(timer, MIX)}
         captureEvent={captureEvent}
         disabled={!hasEvent(timer, LEVAIN)}
@@ -96,6 +99,7 @@ const Timer: React.FC<any> = () => {
       <Step
         tick={tick}
         startEvent={firstEvent(timer, MIX)}
+        endEvent={firstEvent(timer, FOLD)}
         targetEvent={firstEvent(timer, SALT)}
         captureEvent={captureEvent}
         disabled={!hasEvent(timer, MIX)}
@@ -128,14 +132,30 @@ const Timer: React.FC<any> = () => {
         tick={tick}
         startEvent={bulkEvent}
         endEvent={proofEvent}
-        targetEvent={firstEvent(timer, PRESHAPE)}
+        targetEvent={preshapeEvent}
         captureEvent={captureEvent}
         disabled={'auto'}
       />
       <Step
         tick={tick}
-        startEvent={firstEvent(timer, PRESHAPE)}
-        targetEvent={firstEvent(timer, PROOF)}
+        startEvent={preshapeEvent}
+        endEvent={bakeEvent}
+        targetEvent={proofEvent}
+        captureEvent={captureEvent}
+        disabled={'auto'}
+      />
+      <Step
+        tick={tick}
+        startEvent={proofEvent}
+        endEvent={doneEvent}
+        targetEvent={bakeEvent}
+        captureEvent={captureEvent}
+        disabled={'auto'}
+      />
+      <Step
+        tick={tick}
+        startEvent={startEvent}
+        targetEvent={doneEvent}
         captureEvent={captureEvent}
         disabled={'auto'}
       />

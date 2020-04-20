@@ -10,6 +10,8 @@ export enum EventType {
   PROOF = 'proof',
   STEAM = 'bake with steam',
   BAKE = 'bake',
+  COOL = 'cool',
+  END = 'done',
 }
 
 export interface RawEvent {
