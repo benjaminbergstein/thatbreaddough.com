@@ -1,7 +1,7 @@
-export PROJECT=next-project
+export PROJECT=bread-timer
 export DOCKER_IMAGE=${PROJECT}:latest
 export SERVICE=app
-export PORT ?= 3000
+export PORT ?= 20000
 
 define COMPOSE_CMD
 docker-compose -p ${PROJECT} \
@@ -14,6 +14,9 @@ build:
 
 start:
 	${COMPOSE_CMD} up -d ${SERVICE}
+
+console:
+	${COMPOSE_CMD} exec ${SERVICE} /bin/bash
 
 logs:
 	${COMPOSE_CMD} logs -f ${SERVICE}
