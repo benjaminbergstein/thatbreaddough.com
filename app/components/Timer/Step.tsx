@@ -9,7 +9,7 @@ import {
   formatElapsed,
 } from '../../utils/timer'
 
-const EventTimer: React.FC<any> = ({
+const Step: React.FC<any> = ({
   tick,
   startEvent,
   endEvent = { occurredAt: null },
@@ -61,4 +61,4 @@ const EventTimer: React.FC<any> = ({
   )
 }
 
-export default EventTimer
+export default Step

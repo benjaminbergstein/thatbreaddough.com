@@ -24,7 +24,7 @@ import {
 } from '../../utils/timer'
 
 import Header from './Header'
-import EventTimer from './EventTimer'
+import Step from './Step'
 
 const {
   START,
@@ -72,28 +72,28 @@ const Timer: React.FC<any> = () => {
   return (
     <Grid fill="horizontal" columns={['1/3', '1/3', '1/3']}>
       <Header />
-      <EventTimer
+      <Step
         tick={tick}
         startEvent={startEvent}
         endEvent={firstEvent(timer, MIX)}
         targetEvent={firstEvent(timer, LEVAIN)}
         captureEvent={captureEvent}
       />
-      <EventTimer
+      <Step
         tick={tick}
         startEvent={startEvent}
         endEvent={firstEvent(timer, MIX)}
         targetEvent={firstEvent(timer, AUTOLYSE)}
         captureEvent={captureEvent}
       />
-      <EventTimer
+      <Step
         tick={tick}
         startEvent={startEvent}
         targetEvent={firstEvent(timer, MIX)}
         captureEvent={captureEvent}
         disabled={!hasEvent(timer, LEVAIN)}
       />
-      <EventTimer
+      <Step
         tick={tick}
         startEvent={firstEvent(timer, MIX)}
         targetEvent={firstEvent(timer, SALT)}
@@ -101,7 +101,7 @@ const Timer: React.FC<any> = () => {
         disabled={!hasEvent(timer, MIX)}
       />
       {folds.map((fold, index) => (
-        <EventTimer
+        <Step
           tick={tick}
           startEvent={index === 0 ? mixEvent : folds[index - 1]}
           endEvent={folds[index + 1] || bulkEvent}
@@ -109,14 +109,14 @@ const Timer: React.FC<any> = () => {
           captureEvent={captureEvent}
         />
       ))}
-      {bulkEvent.occurredAt === null && <EventTimer
+      {bulkEvent.occurredAt === null && <Step
         tick={tick}
         startEvent={startEvent}
         targetEvent={{ type: FOLD, occurredAt: null}}
         captureEvent={captureEvent}
         disabled={!hasEvent(timer, MIX)}
       />}
-      <EventTimer
+      <Step
         tick={tick}
         startEvent={folds.slice(-1)[0] || { occurredAt: null }}
         endEvent={preshapeEvent}
@@ -124,7 +124,7 @@ const Timer: React.FC<any> = () => {
         captureEvent={captureEvent}
         disabled={!hasEvent(timer, FOLD)}
       />
-      <EventTimer
+      <Step
         tick={tick}
         startEvent={bulkEvent}
         endEvent={proofEvent}
@@ -132,7 +132,7 @@ const Timer: React.FC<any> = () => {
         captureEvent={captureEvent}
         disabled={'auto'}
       />
-      <EventTimer
+      <Step
         tick={tick}
         startEvent={firstEvent(timer, PRESHAPE)}
         targetEvent={firstEvent(timer, PROOF)}
