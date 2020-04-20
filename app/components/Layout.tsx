@@ -1,5 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import Link from 'next/link'
+import { TiHome, TiStopwatch } from 'react-icons/ti'
+
 import {
   Anchor,
   Nav,
@@ -20,8 +22,18 @@ const theme = {
 
 const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme} full>
   <Nav direction="row" background="brand" pad="medium">
-    <Anchor href="/">Home</Anchor>
-    <Anchor href="/timer">New timer</Anchor>
+    <Link href="/">
+      <Anchor
+        icon={<TiHome />}
+        label="Home"
+      />
+    </Link>
+    <Link href="/timer">
+      <Anchor
+        icon={<TiStopwatch />}
+        label="New timer"
+      />
+    </Link>
   </Nav>
   {children}
 </Grommet>
