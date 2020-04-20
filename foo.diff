@@ -1,0 +1,11 @@
+--- a/docker/Makefile
++++ b/docker/Makefile
+@@ -18,5 +18,8 @@ start:
+ logs:
+        ${COMPOSE_CMD} logs -f ${SERVICE}
+
++console:
++       ${COMPOSE_CMD} exec ${SERVICE} /bin/bash
++
+ stop:
+        ${COMPOSE_CMD} down --remove-orphans

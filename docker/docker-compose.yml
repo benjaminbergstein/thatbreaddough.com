@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  app:
+    image: ${DOCKER_IMAGE}
+    ports:
+      - ${PORT}:3000
+    command: ["dev"]
+    volumes:
+      - ./app:/app
