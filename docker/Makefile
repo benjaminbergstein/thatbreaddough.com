@@ -2,11 +2,12 @@ export PROJECT=bread-timer
 export DOCKER_IMAGE=${PROJECT}:latest
 export SERVICE=app
 export PORT ?= 20000
+export ENVIRONMENT ?= development
 
 define COMPOSE_CMD
-docker-compose -p ${PROJECT} \
+docker-compose -p ${PROJECT}_${ENVIRONMENT} \
   --project-directory=.. \
-  -f ./docker-compose.yml
+  -f ./docker-compose.${ENVIRONMENT}.yml
 endef
 
 build:

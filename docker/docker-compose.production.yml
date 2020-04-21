@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  app:
+    image: ${DOCKER_IMAGE}
+    networks:
+       - haproxy-controller_haproxy-controller
+
+networks:
+   haproxy-controller_haproxy-controller:
+      external: true
