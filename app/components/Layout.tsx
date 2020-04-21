@@ -31,7 +31,7 @@ const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme} full>
     <Link href="/timer">
       <Anchor
         icon={<TiStopwatch />}
-        label="New timer"
+        label="Timer"
       />
     </Link>
   </Nav>

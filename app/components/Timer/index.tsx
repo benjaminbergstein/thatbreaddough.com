@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { MdRefresh } from 'react-icons/md'
+
 import {
   Grid,
   Text,
@@ -46,6 +48,8 @@ const Timer: React.FC<any> = () => {
   const startEvent = firstEvent(timer, START)
   const [tick, setTick] = useState<number>(+new Date())
 
+  const resetTimer = () => { setTimer([]) }
+
   const captureEvent: (type: EventType) => void = (type) => {
     setTimer(addEvent(timer, type))
   }
@@ -64,7 +68,6 @@ const Timer: React.FC<any> = () => {
   const folds = mixEvent ? filterForType(timer, FOLD) : []
   const foldBasis = folds.slice(-1)[0] || mixEvent
 
-
   const preshapeEvent = firstEvent(timer, PRESHAPE)
   const proofEvent = firstEvent(timer, PROOF)
   const steamEvent = firstEvent(timer, STEAM)
@@ -72,93 +75,108 @@ const Timer: React.FC<any> = () => {
   const doneEvent = firstEvent(timer, END)
 
   return (
-    <Grid fill="horizontal" columns={['1/3', '1/3', '1/3']}>
-      <Header />
-      <Step
-        tick={tick}
-        startEvent={startEvent}
-        endEvent={firstEvent(timer, MIX)}
-        targetEvent={firstEvent(timer, LEVAIN)}
-        captureEvent={captureEvent}
-      />
-      <Step
-        tick={tick}
-        startEvent={startEvent}
-        endEvent={firstEvent(timer, MIX)}
-        targetEvent={firstEvent(timer, AUTOLYSE)}
-        captureEvent={captureEvent}
-      />
-      <Step
-        tick={tick}
-        startEvent={startEvent}
-        endEvent={bakeEvent}
-        targetEvent={firstEvent(timer, MIX)}
-        captureEvent={captureEvent}
-        disabled={!hasEvent(timer, LEVAIN)}
-      />
-      <Step
-        tick={tick}
-        startEvent={firstEvent(timer, MIX)}
-        endEvent={firstEvent(timer, FOLD)}
-        targetEvent={firstEvent(timer, SALT)}
-        captureEvent={captureEvent}
-        disabled={!hasEvent(timer, MIX)}
-      />
-      {folds.map((fold, index) => (
-        <Step
-          tick={tick}
-          startEvent={index === 0 ? mixEvent : folds[index - 1]}
-          endEvent={folds[index + 1] || bulkEvent}
-          targetEvent={fold}
-          captureEvent={captureEvent}
+    <Grid fill="horizontal" align="center" justify="center">
+      <Box fill>
+        <Grid fill="horizontal" columns={['1/3', '1/3', '1/3']}>
+          <Header />
+          <Step
+            tick={tick}
+            startEvent={startEvent}
+            endEvent={firstEvent(timer, MIX)}
+            targetEvent={firstEvent(timer, LEVAIN)}
+            captureEvent={captureEvent}
+          />
+          <Step
+            tick={tick}
+            startEvent={startEvent}
+            endEvent={firstEvent(timer, MIX)}
+            targetEvent={firstEvent(timer, AUTOLYSE)}
+            captureEvent={captureEvent}
+          />
+          <Step
+            tick={tick}
+            startEvent={startEvent}
+            endEvent={bakeEvent}
+            targetEvent={firstEvent(timer, MIX)}
+            captureEvent={captureEvent}
+            disabled={!hasEvent(timer, LEVAIN)}
+          />
+          <Step
+            tick={tick}
+            startEvent={firstEvent(timer, MIX)}
+            endEvent={firstEvent(timer, FOLD)}
+            targetEvent={firstEvent(timer, SALT)}
+            captureEvent={captureEvent}
+            disabled={!hasEvent(timer, MIX)}
+          />
+          {folds.map((fold, index) => (
+            <Step
+              tick={tick}
+              startEvent={index === 0 ? mixEvent : folds[index - 1]}
+              endEvent={folds[index + 1] || bulkEvent}
+              targetEvent={fold}
+              captureEvent={captureEvent}
+            />
+          ))}
+          {bulkEvent.occurredAt === null && <Step
+            tick={tick}
+            startEvent={startEvent}
+            targetEvent={{ type: FOLD, occurredAt: null}}
+            captureEvent={captureEvent}
+            disabled={!hasEvent(timer, MIX)}
+          />}
+          <Step
+            tick={tick}
+            startEvent={folds.slice(-1)[0] || { occurredAt: null }}
+            endEvent={preshapeEvent}
+            targetEvent={bulkEvent}
+            captureEvent={captureEvent}
+            disabled={!hasEvent(timer, FOLD)}
+          />
+          <Step
+            tick={tick}
+            startEvent={bulkEvent}
+            endEvent={proofEvent}
+            targetEvent={preshapeEvent}
+            captureEvent={captureEvent}
+            disabled={'auto'}
+          />
+          <Step
+            tick={tick}
+            startEvent={preshapeEvent}
+            endEvent={bakeEvent}
+            targetEvent={proofEvent}
+            captureEvent={captureEvent}
+            disabled={'auto'}
+          />
+          <Step
+            tick={tick}
+            startEvent={proofEvent}
+            endEvent={doneEvent}
+            targetEvent={bakeEvent}
+            captureEvent={captureEvent}
+            disabled={'auto'}
+          />
+          <Step
+            tick={tick}
+            startEvent={startEvent}
+            targetEvent={doneEvent}
+            captureEvent={captureEvent}
+            disabled={'auto'}
+          />
+        </Grid>
+      </Box>
+
+      <Box>
+        <Button
+          color="status-warning"
+          type="reset"
+          size="large"
+          icon={<MdRefresh />}
+          label="Reset timer"
+          onClick={resetTimer}
         />
-      ))}
-      {bulkEvent.occurredAt === null && <Step
-        tick={tick}
-        startEvent={startEvent}
-        targetEvent={{ type: FOLD, occurredAt: null}}
-        captureEvent={captureEvent}
-        disabled={!hasEvent(timer, MIX)}
-      />}
-      <Step
-        tick={tick}
-        startEvent={folds.slice(-1)[0] || { occurredAt: null }}
-        endEvent={preshapeEvent}
-        targetEvent={bulkEvent}
-        captureEvent={captureEvent}
-        disabled={!hasEvent(timer, FOLD)}
-      />
-      <Step
-        tick={tick}
-        startEvent={bulkEvent}
-        endEvent={proofEvent}
-        targetEvent={preshapeEvent}
-        captureEvent={captureEvent}
-        disabled={'auto'}
-      />
-      <Step
-        tick={tick}
-        startEvent={preshapeEvent}
-        endEvent={bakeEvent}
-        targetEvent={proofEvent}
-        captureEvent={captureEvent}
-        disabled={'auto'}
-      />
-      <Step
-        tick={tick}
-        startEvent={proofEvent}
-        endEvent={doneEvent}
-        targetEvent={bakeEvent}
-        captureEvent={captureEvent}
-        disabled={'auto'}
-      />
-      <Step
-        tick={tick}
-        startEvent={startEvent}
-        targetEvent={doneEvent}
-        captureEvent={captureEvent}
-        disabled={'auto'}
-      />
+      </Box>
     </Grid>
   )
 }
