@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import createPersistedState from 'use-persisted-state'
 import { MdRefresh } from 'react-icons/md'
 
 import {
@@ -43,8 +44,10 @@ const {
   END,
 } = EventType
 
+const useTimerState = createPersistedState('bread-timer')
+
 const Timer: React.FC<any> = () => {
-  const [timer, setTimer] = useState<BreadTimer>([])
+  const [timer, setTimer] = useTimerState<BreadTimer>([])
   const startEvent = firstEvent(timer, START)
   const [tick, setTick] = useState<number>(+new Date())
 
@@ -76,6 +79,14 @@ const Timer: React.FC<any> = () => {
 
   return (
     <Grid fill="horizontal" align="center" justify="center">
+      <Box fill align="center" justify="center" margin={{ bottom: "large" }}>
+        <Text weight="bold" size="xxlarge" color="dark-3">Bread timer</Text>
+        <Text weight="normal" size="medium" color="dark-2">
+          Keep track of how long each step in your dough's development has lasted
+          with this timer. Click 
+        </Text>
+      </Box>
+
       <Box fill>
         <Grid fill="horizontal" columns={['1/3', '1/3', '1/3']}>
           <Header />
@@ -159,7 +170,7 @@ const Timer: React.FC<any> = () => {
           />
           <Step
             tick={tick}
-            startEvent={startEvent}
+            startEvent={hasEvent(timer, PROOF) ? startEvent : proofEvent}
             targetEvent={doneEvent}
             captureEvent={captureEvent}
             disabled={'auto'}
@@ -167,7 +178,7 @@ const Timer: React.FC<any> = () => {
         </Grid>
       </Box>
 
-      <Box>
+      <Box margin={{ top: "large" }}>
         <Button
           color="status-warning"
           type="reset"

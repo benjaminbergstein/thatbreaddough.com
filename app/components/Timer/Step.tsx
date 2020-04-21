@@ -1,6 +1,7 @@
-import React from 'react'
-import { FaCheckCircle, FaStepForward } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react'
+import { FaPlay, FaCheckCircle, FaStepForward } from 'react-icons/fa'
 import {
+  Grid,
   Text,
   Box,
   Button,
@@ -30,25 +31,33 @@ const Step: React.FC<any> = ({
 
   const wasSkipped = hasEnded && !occurredAt && !isDoneEvent
 
-  const disabled = disabledSetting === true || (
-    disabledSetting === 'auto' && !startEvent.occurredAt
-  )
+  const [disabled, setDisabled] = useState<boolean>(true)
 
+  useEffect(() => {
+    setDisabled(disabledSetting === true || (
+      disabledSetting === 'auto' && !startEvent.occurredAt
+    ))
+  }, [tick])
 
   return (
     <>
-      <Box height={{ min: "3rem" }} justify="center" align="center">
-        {occurredAt === null && !wasSkipped && (
-          <Button
-            disabled={disabled}
-            size="small"
-            label={eventType}
-            onClick={() => captureEvent(eventType)}
-          />
-        )}
-        {(occurredAt !== null || wasSkipped) && <Text color="dark-2">
-          {eventType}
-        </Text>}
+      <Box fill height={{ min: "3rem" }} justify="center" align="center">
+        <Grid columns={["flex", "flex"]} justify="center" align="center">
+          <Box><span style={{ whiteSpace: 'nowrap' }}>{eventType}</span></Box>
+          <Box>
+            {occurredAt === null && !wasSkipped && (
+              <Button
+                disabled={disabled}
+                color="accent-1"
+                size="small"
+                plain={undefined}
+                primary
+                icon={<FaPlay />}
+                onClick={() => captureEvent(eventType)}
+              />
+            )}
+          </Box>
+        </Grid>
       </Box>
 
       <Box justify="center" align="center">
@@ -59,7 +68,7 @@ const Step: React.FC<any> = ({
           </Text>}
         </Text>
       </Box>
-      <Box justify="center" align="center">
+      <Box justify="center" align="start">
         <Text color="dark-2">
           {!isDoneEvent && occurredAt !== null && formatElapsed(elapsed)}
           {(isDoneEvent || (occurredAt === null && wasSkipped !== true)) && '-'}
