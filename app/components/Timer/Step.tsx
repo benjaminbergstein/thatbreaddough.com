@@ -13,8 +13,9 @@ import {
 
 import { EventType } from '../../utils/timer/types'
 
+import Clock from './Clock'
+
 const Step: React.FC<any> = ({
-  tick,
   startEvent,
   endEvent = { occurredAt: null },
   targetEvent,
@@ -27,8 +28,8 @@ const Step: React.FC<any> = ({
   const { occurredAt: endedAt } = endEvent
   const sinceStart = occurredAt - startedAt
   const hasEnded = endedAt !== null || (occurredAt !== null && isDoneEvent)
-  const elapsed = (endedAt || tick) - occurredAt
 
+  const wasStarted = !!occurredAt
   const wasSkipped = hasEnded && !occurredAt && !isDoneEvent
 
   const [disabled, setDisabled] = useState<boolean>(true)
@@ -37,51 +38,86 @@ const Step: React.FC<any> = ({
     setDisabled(disabledSetting === true || (
       disabledSetting === 'auto' && !startEvent.occurredAt
     ))
-  }, [tick])
+  }, [startEvent.occurredAt, disabledSetting])
+
+  const header = <Text weight="bold" color="neutral-3">
+    <span style={{ whiteSpace: 'nowrap' }}>
+      {`${eventType[0].toUpperCase()}${eventType.substr(1)}`}
+    </span>
+  </Text>
+
+  if (wasStarted) return (
+    <Box
+      background="white"
+      elevation="xsmall"
+      border={{ color: 'light-1' }}
+      round='xsmall'
+      pad="medium"
+      margin={{ bottom: "medium" }}
+    >
+      <Box>
+        {header}
+      </Box>
+      <Grid
+        margin={{ top: 'small' }}
+        columns={['1/2', '1/2']}
+        rows={["auto"]}
+      >
+        <Box><Text color="dark-3" size="small">start</Text></Box>
+        <Box><Text color="dark-3" size="small">elapsed</Text></Box>
+
+        <Box>
+          <Text color="dark-2">
+            {wasSkipped === false && (wasStarted ? <Clock start={startedAt} end={occurredAt} /> : '-')}
+            {wasSkipped && <Text size="small" color="dark-4">
+              <FaStepForward />
+            </Text>}
+          </Text>
+        </Box>
+
+        <Box>
+          <Text color="dark-2">
+            {!isDoneEvent && wasStarted && <Clock start={occurredAt} end={endedAt} />}
+            {(isDoneEvent || (!wasStarted && wasSkipped !== true)) && '-'}
+            {!wasSkipped && hasEnded && <Text size="small" color="green">
+              <span>&nbsp;&nbsp;</span><FaCheckCircle />
+            </Text>}
+          </Text>
+
+          {wasSkipped && <Text size="small" color="dark-4">
+            <span>skipped</span>
+          </Text>}
+        </Box>
+      </Grid>
+    </Box>
+  )
 
   return (
-    <>
-      <Box fill height={{ min: "3rem" }} justify="center" align="center">
-        <Grid columns={["flex", "flex"]} justify="center" align="center">
-          <Box><span style={{ whiteSpace: 'nowrap' }}>{eventType}</span></Box>
-          <Box>
-            {occurredAt === null && !wasSkipped && (
-              <Button
-                disabled={disabled}
-                color="accent-1"
-                size="small"
-                plain={undefined}
-                primary
-                icon={<FaPlay />}
-                onClick={() => captureEvent(eventType)}
-              />
-            )}
-          </Box>
-        </Grid>
-      </Box>
+    <Box
+      background="white"
+      elevation="xsmall"
+      border={{ color: 'light-1' }}
+      round='xsmall'
+      pad={{ vertical: "small", horizontal: "medium" }}
+      margin={{ bottom: "medium" }}
+    >
+      <Grid columns={["flex", "flex"]}>
+        <Box justify="center">
+          {header}
+        </Box>
 
-      <Box justify="center" align="center">
-        <Text color="dark-2">
-          {wasSkipped === false && (occurredAt !== null ? formatElapsed(sinceStart) : '-')}
-          {wasSkipped && <Text size="small" color="dark-4">
-            <FaStepForward />
-          </Text>}
-        </Text>
-      </Box>
-      <Box justify="center" align="start">
-        <Text color="dark-2">
-          {!isDoneEvent && occurredAt !== null && formatElapsed(elapsed)}
-          {(isDoneEvent || (occurredAt === null && wasSkipped !== true)) && '-'}
-          {!wasSkipped && hasEnded && <Text size="small" color="green">
-            <span>&nbsp;&nbsp;</span><FaCheckCircle />
-          </Text>}
-        </Text>
-
-        {wasSkipped && <Text size="small" color="dark-4">
-          <span>skipped</span>
-        </Text>}
-      </Box>
-    </>
+        <Box align="end" justify="end">
+          <Text>
+            <Button
+              disabled={disabled}
+              color="accent-1"
+              icon={<FaPlay />}
+              onClick={() => captureEvent(eventType)}
+            />
+          </Text>
+        </Box>
+      </Grid>
+    </Box>
   )
 }
 

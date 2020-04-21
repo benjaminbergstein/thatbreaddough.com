@@ -20,22 +20,25 @@ const theme = {
   },
 };
 
-const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme} full>
-  <Nav direction="row" background="brand" pad="medium">
-    <Link href="/">
-      <Anchor
-        icon={<TiHome />}
-        label="Home"
-      />
-    </Link>
-    <Link href="/timer">
-      <Anchor
-        icon={<TiStopwatch />}
-        label="Timer"
-      />
-    </Link>
-  </Nav>
-  {children}
+const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme}>
+  <Box>
+    <Nav direction="row" background="light-2" pad="medium">
+      <Link href="/">
+        <Anchor
+          color="brand"
+          icon={<TiHome />}
+          label="Home"
+        />
+      </Link>
+      <Link href="/timer">
+        <Anchor
+          icon={<TiStopwatch />}
+          label="Timer"
+        />
+      </Link>
+    </Nav>
+    {children}
+  </Box>
 </Grommet>
 
 export default IndexPage

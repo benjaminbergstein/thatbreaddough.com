@@ -10,8 +10,8 @@ export const formatElapsed: (number) => string = (elapsed) => {
   const milli = elapsed % 1000
   const seconds = Math.floor(elapsed / 1000)
   const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes/ 60)
-  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${milli}`
+  const hours = Math.floor(minutes / 60)
+  return `${pad(hours % 24)}:${pad(minutes % 60)}:${pad(seconds % 60)}`
 }
 
 export const firstEvent: (
