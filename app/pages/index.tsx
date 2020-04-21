@@ -17,22 +17,22 @@ const IndexPage: React.FC<any> = () => <Layout>
   <Head>
     <title>Sourdough Bread Timer</title>
   </Head>
-  <Box fill="horizontal" align="center" flex="grow">
+  <Container fill="horizontal" align="center" flex="grow">
     <Box
       width={{ max: '500px', }}
       align="center"
       style={{
-        background: 'rgba(255, 255, 255, 0.9)',
-        zIndex: 2, boxShadow: 'white 0px 50px 24px 14px'
+        // background: 'rgba(255, 255, 255, 0.9)',
+        zIndex: 2,
       }}
       pad={{ horizontal: "large", vertical: "xlarge" }}
       margin={{ bottom: '100px' }}
     >
       <Text as="h1" size="xxlarge" weight="bold" color="dark-1" margin={{ vertical: 'small' }}>
-        Sourdough bread timer
+        Bread timer
       </Text>
 
-      <Heading level={3} color="dark-2">
+      <Heading level={4} color="dark-2">
         An interval timer for working out your sourdough muscles.
         Easily track the time between mix, folds, proof,  bake, and more.
       </Heading>
@@ -49,14 +49,17 @@ const IndexPage: React.FC<any> = () => <Layout>
         </Text>
       </Box>
     </Box>
-
-    <Screenshot>
-      <ScreenshotWrapper>
-        <img src="screenshot.jpg" width="100%" />
-      </ScreenshotWrapper>
-    </Screenshot>
-  </Box>
+  </Container>
 </Layout>
+
+const Container = styled(Box)`
+  background: url(screenshot.jpg);
+  background-size: 70%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-y: 410px;
+  background-position-x: 50%;
+`
 
 const Hero = styled.div`
   background: rgba(255, 255, 255, 0.9);
@@ -67,7 +70,7 @@ const Hero = styled.div`
 const Screenshot = styled.div`
   width: 100%;
   position: fixed;
-  top: 55%;
+  top: 65%;
   height: 45%;
   overflow: hidden;
   z-index: 1;

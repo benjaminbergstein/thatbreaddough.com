@@ -40,5 +40,10 @@ const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme} style=
 const Footer = styled.footer`
   position: relative;
   z-index: 2;
+  width: 100%;
+  background: white;
+  font-size: 10px;
+  line-height: 18px;
 `
+
 export default IndexPage
