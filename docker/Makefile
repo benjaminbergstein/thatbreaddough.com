@@ -24,3 +24,6 @@ logs:
 
 stop:
 	${COMPOSE_CMD} down --remove-orphans
+
+release: ENVIRONMENT=production
+release: build stop start

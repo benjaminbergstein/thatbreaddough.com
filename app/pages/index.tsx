@@ -74,7 +74,7 @@ const Screenshot = styled.div`
 `
 
 const ScreenshotWrapper = styled.div`
-  width: 60%;
+  width: 57%;
   margin: 0 auto;
 `
 
