@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import createPersistedState from 'use-persisted-state'
 import { MdRefresh } from 'react-icons/md'
-import { FaPlay } from 'react-icons/fa'
-import { GiSlicedBread } from 'react-icons/gi'
 
 import {
   Grid,
@@ -70,30 +68,6 @@ const Timer: React.FC<any> = () => {
 
   return (
     <Grid fill="horizontal" align="center" justify="center">
-      <Box
-        width={{ max: '600px' }}
-        fill="vertical"
-        align="center"
-        justify="center"
-        margin={{ bottom: "large" }}
-      >
-        <Text weight="bold" size="xxlarge" color="dark-3">Sourdough bread timer</Text>
-
-        <Box margin={{ vertical: "medium" }}>
-          <Text weight="normal" size="medium" color="dark-2">
-            <p>This sourdough bread timer uses a basic structure
-            for dough preparation to track the progress of your dough.</p>
-
-            <p>Click the Play button (<FaPlay style={{ fontSize: '10px' }}/>) after
-            you complete each step toward your loaf.</p>
-
-            <p>Skip the "Autolyse" and "Salt" steps if you mix levain, flour and salt at once.</p>
-
-            <p>Happy bread making! <Text color="neutral-4"><GiSlicedBread style={{ fontSize: '20px' }} /></Text></p>
-          </Text>
-        </Box>
-      </Box>
-
       <Box fill>
         <Grid fill="horizontal">
           <Step

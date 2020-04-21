@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head'
 
 import styled from 'styled-components'
 import Link from 'next/link'
@@ -13,15 +14,17 @@ import {
 import Layout from '../components/Layout'
 
 const IndexPage: React.FC<any> = () => <Layout>
-  <Main align="center">
+  <Head>
+    <title>Sourdough Bread Timer</title>
+  </Head>
+  <Box fill="horizontal" align="center" flex="grow">
     <Box
       width={{ max: '500px', }}
       align="center"
       style={{
         background: 'rgba(255, 255, 255, 0.9)',
-        zIndex: 2, boxShadow: 'white -40px 0px 24px 14px'
+        zIndex: 2, boxShadow: 'white 0px 50px 24px 14px'
       }}
-      fill
       pad={{ horizontal: "large", vertical: "xlarge" }}
       margin={{ bottom: '100px' }}
     >
@@ -52,7 +55,7 @@ const IndexPage: React.FC<any> = () => <Layout>
         <img src="screenshot.jpg" width="100%" />
       </ScreenshotWrapper>
     </Screenshot>
-  </Main>
+  </Box>
 </Layout>
 
 const Hero = styled.div`

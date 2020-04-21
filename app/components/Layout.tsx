@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { TiHome, TiStopwatch } from 'react-icons/ti'
+import styled from 'styled-components'
 
 import {
   Anchor,
@@ -20,8 +21,8 @@ const theme = {
   },
 };
 
-const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme}>
-  <Box>
+const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme} style={{ height: '100%' }}>
+  <Box height={{ min: '100%' }}>
     <Nav direction="row" background="light-2" pad="medium">
       <Link href="/">
         <Anchor icon={<TiHome />} a11yTitle="Home" />
@@ -31,7 +32,13 @@ const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme}>
     </Link>
     </Nav>
     {children}
+    <Footer>&copy; 2020 <Anchor href="http://benjaminbergstein.com">Ben Bergstein</Anchor></Footer>
   </Box>
 </Grommet>
 
+
+const Footer = styled.footer`
+  position: relative;
+  z-index: 2;
+`
 export default IndexPage

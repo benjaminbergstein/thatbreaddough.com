@@ -19,6 +19,7 @@ export default class MyDocument extends Document {
           <>
             {initialProps.styles}
             {sheet.getStyleElement()}
+            <style global jsx>{`#__next { height: 100%; }`}</style>
           </>
         ),
       }
@@ -29,10 +30,10 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html style={{ height: '100%' }}>
         <Head />
-        <body style={{ margin: 0 }}>
-          <Main />
+        <body style={{ margin: 0, height: '100%' }}>
+          <Main style={{ height: '100%' }} />
           <NextScript />
         </body>
       </Html>
