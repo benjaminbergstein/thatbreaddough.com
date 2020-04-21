@@ -24,18 +24,11 @@ const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme}>
   <Box>
     <Nav direction="row" background="light-2" pad="medium">
       <Link href="/">
-        <Anchor
-          color="brand"
-          icon={<TiHome />}
-          label="Home"
-        />
+        <Anchor icon={<TiHome />} a11yTitle="Home" />
       </Link>
       <Link href="/timer">
-        <Anchor
-          icon={<TiStopwatch />}
-          label="Timer"
-        />
-      </Link>
+        <Anchor icon={<TiStopwatch />} a11yTitle="Timer" />
+    </Link>
     </Nav>
     {children}
   </Box>

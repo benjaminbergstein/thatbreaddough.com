@@ -3,7 +3,7 @@ export enum EventType {
   LEVAIN = 'levain build',
   AUTOLYSE = 'autolyse',
   SALT = 'salt added',
-  MIX =  'levain added',
+  MIX =  'levain mix',
   STRETCH_FOLD = 'stretch-fold',
   COIL_FOLD = 'coil-fold',
   LAMINATE = 'lamination',
