@@ -46,7 +46,7 @@ const {
 
 const useTimerState = createPersistedState('bread-timer')
 
-const Timer: React.FC<any> = () => {
+const Timer: React.FC<any> = ({ onEvent }) => {
   const [timer, setTimer] = useTimerState<BreadTimer>([])
   const startEvent = firstEvent(timer, START)
 
@@ -60,7 +60,9 @@ const Timer: React.FC<any> = () => {
         label: type,
       })
     } catch (e) {}
-    setTimer(addEvent(timer, type))
+    const newTimer = addEvent(timer, type)
+    setTimer(newTimer)
+    onEvent(newTimer)
   }
 
   const mixEvent = firstEvent(timer, MIX)
