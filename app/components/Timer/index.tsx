@@ -110,6 +110,7 @@ const Timer: React.FC<any> = () => {
               endEvent={folds[index + 1] || bulkEvent}
               targetEvent={fold}
               captureEvent={captureEvent}
+              i={index + 1}
             />
           ))}
           {bulkEvent.occurredAt === null && <Step

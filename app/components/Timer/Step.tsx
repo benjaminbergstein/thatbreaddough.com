@@ -21,6 +21,7 @@ const Step: React.FC<any> = ({
   targetEvent,
   captureEvent,
   disabled: disabledSetting,
+  i = null,
 }) => {
   const { type: eventType, occurredAt } = targetEvent
   const isDoneEvent = eventType === EventType.END
@@ -42,7 +43,7 @@ const Step: React.FC<any> = ({
 
   const header = <Text weight="bold" color="neutral-3">
     <span style={{ whiteSpace: 'nowrap', textDecoration: wasSkipped ? 'line-through' : 'none' }}>
-      {`${eventType[0].toUpperCase()}${eventType.substr(1)}`}
+      {`${eventType[0].toUpperCase()}${eventType.substr(1)}`}{i !== null ? ` ${i}` : ''}
     </span>
   </Text>
 
