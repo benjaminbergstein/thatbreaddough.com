@@ -25,5 +25,9 @@ logs:
 stop:
 	${COMPOSE_CMD} down --remove-orphans
 
+sitemap:
+	curl http://www.google.com/ping?sitemap=https://www.thatbreaddough.com/sitemap.xml
+
+
 release: ENVIRONMENT=production
-release: build stop start
+release: build stop start sitemap

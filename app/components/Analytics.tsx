@@ -3,14 +3,14 @@ import ReactGA from 'react-ga'
 
 let Initialized = false
 
-export const initAnalytics  = () => {
+export const initAnalytics: () => void  = () => {
   if (!Initialized) {
     ReactGA.initialize('UA-31193988-4')
     Initialized = true
   }
 }
 
-export const usePageView = (title) => {
+export const usePageView: (title: string) => null = (title) => {
   useEffect(() => {
     try {
       initAnalytics()
@@ -20,6 +20,10 @@ export const usePageView = (title) => {
   }, [title])
 
   return null
+}
+
+interface Props {
+  pageView: string | null
 }
 
 const Analytics: React.FC<any> = ({ pageView = null }) => {

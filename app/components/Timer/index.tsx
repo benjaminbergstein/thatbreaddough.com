@@ -46,7 +46,11 @@ const {
 
 const useTimerState = createPersistedState('bread-timer')
 
-const Timer: React.FC<any> = ({ onEvent }) => {
+interface Props {
+  onEvent: (timer: BreadTimer) => void
+}
+
+const Timer: React.FC<Props> = ({ onEvent }) => {
   const [timer, setTimer] = useTimerState<BreadTimer>([])
   const startEvent = firstEvent(timer, START)
 
