@@ -10,6 +10,7 @@ import {
   Button,
   Text,
 } from 'grommet'
+import { FaChevronRight } from 'react-icons/fa'
 
 import Layout from '../components/Layout'
 import Analytics from '../components/Analytics'
@@ -17,46 +18,63 @@ import Analytics from '../components/Analytics'
 const IndexPage: React.FC<any> = () => <Layout>
   <Analytics pageView="Home" />
   <Head>
-    <title>Sourdough Bread Timer</title>
+    <title>That Bread Dough | Sourdough Bread Timer</title>
   </Head>
-  <Container fill="horizontal" align="center" flex="grow">
-    <Box
-      width={{ max: '500px', }}
-      align="center"
-      style={{ zIndex: 2 }}
-      pad={{ horizontal: "large", vertical: "xlarge" }}
-      margin={{ bottom: '100px' }}
-    >
-      <Text as="h1" size="xxlarge" weight="bold" color="dark-1" margin={{ vertical: 'small' }}>
-        Bread timer
-      </Text>
-
-      <Heading level={4} color="dark-2">
-        An interval timer for working out your sourdough muscles.
-        Easily track the time between mix, folds, proof,  bake, and more.
-      </Heading>
-
-      <Box align="center" fill margin={{ vertical: 'medium' }}>
-        <Text>
-          <Link href="/timer?ref=home_cta">
-            <Button
-              primary
-              a11yTitle="Start a timer"
-              label="Start a timer"
-            />
-          </Link>
+  <Wrapper fill="vertical" flex="grow">
+    <Container fill align="center" flex="grow">
+      <Box
+        width={{ max: '500px' }}
+        align="center"
+        style={{ zIndex: 2 }}
+        pad={{ horizontal: "large", vertical: "large" }}
+        margin={{ bottom: '100px' }}
+      >
+        <Text as="h2" size="large" weight="bold" color="dark-5" margin={{ vertical: '0px' }}>
+          That Bread Dough
         </Text>
+
+        <Text as="h1" size="xxlarge" weight="bold" color="dark-1" margin={{ vertical: 'small' }}>
+          Sourdough Timer
+        </Text>
+
+        <Heading level={4} color="dark-2" textAlign="center">
+          An interval timer for working out your sourdough muscles.
+          Easily track the time between mix, folds, proof,  bake, and more.
+        </Heading>
+
+        <Box align="center" fill margin={{ vertical: 'medium' }}>
+          <Text>
+            <Link href="/timer?ref=home_cta">
+              <Button
+                primary
+                a11yTitle="Try the Timer"
+                label={<Text>
+                    Try the Timer
+                    <IconPositioning>
+                      <FaChevronRight />
+                    </IconPositioning>
+                  </Text>}
+              />
+            </Link>
+          </Text>
+        </Box>
       </Box>
-    </Box>
-  </Container>
+    </Container>
+  </Wrapper>
 </Layout>
+
+const Wrapper = styled(Box)`
+  max-width: 1000px;
+  margin: 0 auto;
+`
 
 const Container = styled(Box)`
   background: url(screenshot.jpg);
-  background-size: 50%;
+  background-size: contain;
+  background-size: 390px;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position-y: 500px;
+  background-position-y: 430px;
   background-position-x: 50%;
 `
 
@@ -66,18 +84,10 @@ const Hero = styled.div`
   boxShadow: white -40px 0px 24px 14px;
 `
 
-const Screenshot = styled.div`
-  width: 100%;
-  position: fixed;
-  top: 65%;
-  height: 45%;
-  overflow: hidden;
-  z-index: 1;
+const IconPositioning = styled.span`
+  position: relative;
+  top: 2px;
+  left: 11px;
+  font-size: 15px;
 `
-
-const ScreenshotWrapper = styled.div`
-  width: 57%;
-  margin: 0 auto;
-`
-
 export default IndexPage

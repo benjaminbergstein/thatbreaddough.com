@@ -25,7 +25,7 @@ const TimerPage: React.FC<any> = () => <Layout>
 
       <Box margin={{ vertical: "medium" }}>
         <Text weight="normal" size="medium" color="dark-2">
-          <p>This sourdough bread timer uses a basic structure
+          <p>This sourdough bread timer uses a generic structure
           for dough preparation to track the progress of your dough.</p>
 
           <p>Click the Play button (<FaPlay style={{ fontSize: '10px' }}/>) after

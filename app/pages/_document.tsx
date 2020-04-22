@@ -51,6 +51,7 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#ffffff"/>
           <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png"/>
           <meta name="theme-color" content="#ffffff"/>
+          <meta name="description" content="A sourdough bread dough timer that tracks how long your dough rested between mixing, folding, proofing and baking. Use this timer to help you understand what worked and did not work when baking beautiful, naturally-leavened loaves." />
           <style>{`
             #__next { height: 100% }
           `}</style>
