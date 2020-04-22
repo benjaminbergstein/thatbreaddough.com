@@ -24,15 +24,15 @@ const theme = {
 const IndexPage: React.FC<any> = ({ children }) => <Grommet theme={theme} style={{ height: '100%' }}>
   <Box height={{ min: '100%' }}>
     <Nav direction="row" background="light-2" pad="medium">
-      <Link href="/">
+      <Link href="/?ref=global_nav">
         <Anchor icon={<TiHome />} a11yTitle="Home" />
       </Link>
-      <Link href="/timer">
+      <Link href="/timer?ref=global_nav">
         <Anchor icon={<TiStopwatch />} a11yTitle="Timer" />
     </Link>
     </Nav>
     {children}
-    <Footer>&copy; 2020 <Anchor href="http://benjaminbergstein.com">Ben Bergstein</Anchor></Footer>
+    <Footer>&copy; 2020 <Anchor href="http://benjaminbergstein.com?ref=bread_timer">Ben Bergstein</Anchor></Footer>
   </Box>
 </Grommet>
 

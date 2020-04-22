@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaPlay, FaCheckCircle, FaStepForward } from 'react-icons/fa'
+import { FaPlay, FaCheckCircle, FaTimes } from 'react-icons/fa'
 import {
   Grid,
   Text,
@@ -41,7 +41,7 @@ const Step: React.FC<any> = ({
   }, [startEvent.occurredAt, disabledSetting])
 
   const header = <Text weight="bold" color="neutral-3">
-    <span style={{ whiteSpace: 'nowrap' }}>
+    <span style={{ whiteSpace: 'nowrap', textDecoration: wasSkipped ? 'line-through' : 'none' }}>
       {`${eventType[0].toUpperCase()}${eventType.substr(1)}`}
     </span>
   </Text>
@@ -68,25 +68,18 @@ const Step: React.FC<any> = ({
 
         <Box>
           <Text color="dark-2">
-            {wasSkipped === false && (wasStarted ? <Clock start={startedAt} end={occurredAt} /> : '-')}
-            {wasSkipped && <Text size="small" color="dark-4">
-              <FaStepForward />
-            </Text>}
+            <Clock start={startedAt} end={occurredAt} />
           </Text>
         </Box>
 
         <Box>
           <Text color="dark-2">
-            {!isDoneEvent && wasStarted && <Clock start={occurredAt} end={endedAt} />}
-            {(isDoneEvent || (!wasStarted && wasSkipped !== true)) && '-'}
-            {!wasSkipped && hasEnded && <Text size="small" color="green">
+            {!isDoneEvent && <Clock start={occurredAt} end={endedAt} />}
+            {isDoneEvent && '-'}
+            {hasEnded && <Text size="small" color="green">
               <span>&nbsp;&nbsp;</span><FaCheckCircle />
             </Text>}
           </Text>
-
-          {wasSkipped && <Text size="small" color="dark-4">
-            <span>skipped</span>
-          </Text>}
         </Box>
       </Grid>
     </Box>
@@ -108,12 +101,13 @@ const Step: React.FC<any> = ({
 
         <Box align="end" justify="end">
           <Text>
-            <Button
-              disabled={disabled}
+            {<Button
+              disabled={disabled || wasSkipped}
               color="accent-1"
               icon={<FaPlay />}
               onClick={() => captureEvent(eventType)}
-            />
+              style={{ paddingRight: '0' }}
+            />}
           </Text>
         </Box>
       </Grid>

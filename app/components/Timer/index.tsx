@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import ReactGa from 'react-ga'
 import createPersistedState from 'use-persisted-state'
 import { MdRefresh } from 'react-icons/md'
 
@@ -52,6 +53,13 @@ const Timer: React.FC<any> = () => {
   const resetTimer = () => { setTimer([]) }
 
   const captureEvent: (type: EventType) => void = (type) => {
+    try {
+      ReactGa.event({
+        category: 'Timer',
+        action: 'Step captured',
+        label: type,
+      })
+    } catch (e) {}
     setTimer(addEvent(timer, type))
   }
 

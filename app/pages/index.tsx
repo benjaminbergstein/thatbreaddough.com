@@ -12,8 +12,10 @@ import {
 } from 'grommet'
 
 import Layout from '../components/Layout'
+import Analytics from '../components/Analytics'
 
 const IndexPage: React.FC<any> = () => <Layout>
+  <Analytics pageView="Home" />
   <Head>
     <title>Sourdough Bread Timer</title>
   </Head>
@@ -21,10 +23,7 @@ const IndexPage: React.FC<any> = () => <Layout>
     <Box
       width={{ max: '500px', }}
       align="center"
-      style={{
-        // background: 'rgba(255, 255, 255, 0.9)',
-        zIndex: 2,
-      }}
+      style={{ zIndex: 2 }}
       pad={{ horizontal: "large", vertical: "xlarge" }}
       margin={{ bottom: '100px' }}
     >
@@ -39,7 +38,7 @@ const IndexPage: React.FC<any> = () => <Layout>
 
       <Box align="center" fill margin={{ vertical: 'medium' }}>
         <Text>
-          <Link href="/timer">
+          <Link href="/timer?ref=home_cta">
             <Button
               primary
               a11yTitle="Start a timer"
@@ -54,10 +53,10 @@ const IndexPage: React.FC<any> = () => <Layout>
 
 const Container = styled(Box)`
   background: url(screenshot.jpg);
-  background-size: 70%;
+  background-size: 50%;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position-y: 410px;
+  background-position-y: 500px;
   background-position-x: 50%;
 `
 
