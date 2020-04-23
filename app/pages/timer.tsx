@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import ReactGa from 'react-ga'
 import Head from 'next/head'
-import { Main, Box, Text, Anchor, Layer, Button } from 'grommet'
-import { FaPlay, FaTimes } from 'react-icons/fa'
+import { Main, Box, Text, Anchor, Button } from 'grommet'
+import { FaPlay } from 'react-icons/fa'
 import { GiSlicedBread } from 'react-icons/gi'
-import styled from 'styled-components'
 
-import Layout from '../components/Layout'
-import Timer from '../components/Timer'
 import Analytics from '../components/Analytics'
+import Layout from '../components/Layout'
+import Modal from '../components/Modal'
+import Timer from '../components/Timer'
 
 const Feedback: React.FC<any> = ({ start }) => {
   const [show, setShow] = useState<boolean>(false)
   const [wasShown, setWasShown] = useState<boolean>(false)
 
   useEffect(() => {
-    if (start === null) return
+    if (start === null || wasShown === true) return
+
     const interval = setInterval(() => {
       const elapsed = +new Date() - start
-      if (elapsed > 30000 && wasShown !== true) {
+
+      if (elapsed > 30000) {
         setShow(true)
         setWasShown(true)
         ReactGa.event({
@@ -41,28 +43,14 @@ const Feedback: React.FC<any> = ({ start }) => {
 
   const feedbackClicked = () => { hideModal(false) }
 
-  if (!show) return null
-
-  return <Layer
-    onEsc={() => hideModal()}
-    onClickOutside={hideModal}
-  >
-    <Box pad={{ vertical: 'medium', horizontal: 'large' }}>
-      <Close size="small" color="dark-3" onClick={hideModal}><FaTimes /></Close>
-      <Text style={{ textAlign: "center"}}>
-        <Text size="large" weight="bold">Hey there!</Text>
-        <p>Enjoying the timer or having issues?</p>
-        <Button primary target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6" label="Give Feedback!" />
-      </Text>
-    </Box>
-  </Layer>
+  return <Modal onHide={hideModal} show={show}>
+    <Text style={{ textAlign: "center"}}>
+      <Text size="large" weight="bold">Hey there!</Text>
+      <p>Enjoying the timer or having issues?</p>
+      <Button primary target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6" label="Give Feedback!" />
+    </Text>
+  </Modal>
 }
-
-const Close = styled(Text)`
-  position: absolute;
-  top: 8px;
-  right: 8px;
-`
 
 const TimerPage: React.FC<any> = () => {
   const [firstEvent, setFirstEvent] = useState<number | null>(null)

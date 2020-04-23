@@ -22,8 +22,9 @@ of an ingredient and 1000 grams of flour, that ingredient has a baker's percenta
 
 ### Bulk (Ferment)
 
-The period of time during which the dough undergoes **bacterial cultivation (fermentation)**
-occurs *before* it is divided into individual loaves.
+The period of time during which the dough undergoes **microbial cultivation (fermentation)**
+*prior* division into individual loaves. In sourdough bread, this metabolic process results in
+the production of lactic acid, lending its trademark tang.
 
 
 ### Fold
