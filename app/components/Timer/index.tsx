@@ -54,7 +54,11 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
   const [timer, setTimer] = useTimerState<BreadTimer>([])
   const startEvent = firstEvent(timer, START)
 
-  const resetTimer = () => { setTimer([]) }
+  const resetTimer = () => {
+    const hasConfirmedReset = confirm('Are you sure? All data will be lost.')
+    if (!hasConfirmedReset) return
+    setTimer([])
+  }
 
   const captureEvent: (type: EventType) => void = (type) => {
     try {
