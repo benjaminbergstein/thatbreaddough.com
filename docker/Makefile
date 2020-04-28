@@ -1,6 +1,6 @@
 export PROJECT=bread-timer
 export DOCKER_IMAGE=${PROJECT}:latest
-export SERVICE=app
+export SERVICE ?= app
 export PORT ?= 20000
 export ENVIRONMENT ?= development
 
@@ -28,6 +28,8 @@ stop:
 sitemap:
 	curl http://www.google.com/ping?sitemap=https://www.thatbreaddough.com/sitemap.xml
 
+nginx:
+	${COMPOSE_CMD} up -d nginx
 
 release: ENVIRONMENT=production
-release: build stop start sitemap
+release: build stop start nginx sitemap
