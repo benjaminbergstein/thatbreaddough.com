@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { IconType } from 'react-icons'
 
 import {
+  Box,
   Anchor,
 } from 'grommet'
 
@@ -24,10 +25,10 @@ const NavLink: React.FC<Props> = ({
     <Link href={`${href}?ref=global_nav`}>
       <Anchor
         label={
-          <>
+          <Box direction="row">
             <Icon />
             <NavLabel>{!iconOnly && ` ${label}`}</NavLabel>
-          </>
+          </Box>
         }
         a11yTitle={label}
       />
@@ -37,8 +38,9 @@ const NavLink: React.FC<Props> = ({
 
 const NavLabel = styled.span`
   position: relative;
-  top: -1px;
-  marginLeft: 3px;
+  top: -2px;
+  margin-left: 7px;
+  font-weight: normal;
 `
 
 export default NavLink

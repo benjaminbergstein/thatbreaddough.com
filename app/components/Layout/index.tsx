@@ -20,10 +20,13 @@ const theme = {
   },
 };
 
-const IndexPage: React.FC<any> = ({ children }) => (
+interface Props {
+  nav?: boolean
+}
+const Layout: React.FC<Props> = ({ nav = true, children }) => (
   <Grommet theme={theme} style={{ height: '100%' }}>
     <Box height={{ min: '100%' }}>
-      <Nav direction="row" background="light-2" pad="medium">
+      <Nav direction="row" background={nav ? "light-1" : 'white'} pad={{ top: '10px', bottom: '8px', horizontal: '12px' }}>
         <NavLink href="/" Icon={TiHome} iconOnly label="Home" />
         <NavLink href="/timer" Icon={TiStopwatch} label="Timer" />
         <NavLink href="/glossary" Icon={TiBook} label="Glossary" />
@@ -44,4 +47,4 @@ const Footer = styled.footer`
   line-height: 18px;
 `
 
-export default IndexPage
+export default Layout
