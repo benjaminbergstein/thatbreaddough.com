@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import ReactGa from 'react-ga'
-import createPersistedState from 'use-persisted-state'
 import { MdRefresh } from 'react-icons/md'
 
 import {
@@ -29,6 +28,8 @@ import {
 
 import Step from './Step'
 
+import useStorage from '../../hooks/useStorage'
+
 const {
   START,
   LEVAIN,
@@ -44,14 +45,16 @@ const {
   END,
 } = EventType
 
-const useTimerState = createPersistedState('bread-timer')
-
 interface Props {
   onEvent: (timer: BreadTimer) => void
 }
 
+
 const Timer: React.FC<Props> = ({ onEvent }) => {
-  const [timer, setTimer] = useTimerState<BreadTimer>([])
+  const [storage, setTimer, storageVersion, needsMigration] = useStorage()
+  if (needsMigration) return null
+  const { timer } = storage
+
   const startEvent = firstEvent(timer, START)
 
   const resetTimer = () => {
