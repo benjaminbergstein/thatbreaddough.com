@@ -6,7 +6,9 @@ export interface Storage {
 }
 
 export enum EventType {
+  NULL = 'null',
   START = 'start',
+  FEED = 'feed',
   LEVAIN = 'levain build',
   AUTOLYSE = 'autolyse',
   SALT = 'salt added',

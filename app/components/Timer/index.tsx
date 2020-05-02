@@ -16,7 +16,7 @@ import {
   RawEvent,
   NullEvent,
   BreadTimer,
-} from '../../utils/timer/types'
+} from '../../storage/v2/types'
 
 import {
   formatElapsed,
@@ -27,11 +27,13 @@ import {
 } from '../../utils/timer'
 
 import Step from './Step'
+import MultiStep from './MultiStep'
 
 import useStorage from '../../hooks/useStorage'
 
 const {
   START,
+  FEED,
   LEVAIN,
   AUTOLYSE,
   MIX,
@@ -91,6 +93,16 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
     <Grid fill="horizontal" align="center" justify="center">
       <Box fill>
         <Grid fill="horizontal">
+          <MultiStep
+            timer={timer}
+            eventType={FEED}
+            disabled={false}
+            startEvent={startEvent}
+            captureEvent={captureEvent}
+            hiddenByEvent={firstEvent(timer, LEVAIN)}
+            defaultPreviousEvent={startEvent}
+            defaultNextEvent={firstEvent(timer, LEVAIN)}
+          />
           <Step
             startEvent={startEvent}
             endEvent={firstEvent(timer, MIX)}
@@ -117,23 +129,18 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
             captureEvent={captureEvent}
             disabled={!hasEvent(timer, MIX)}
           />
-          {folds.map((fold, index) => (
-            <Step
-              startEvent={index === 0 ? mixEvent : folds[index - 1]}
-              endEvent={folds[index + 1] || bulkEvent}
-              targetEvent={fold}
-              captureEvent={captureEvent}
-              i={index + 1}
-            />
-          ))}
-          {bulkEvent.occurredAt === null && <Step
-            startEvent={startEvent}
-            targetEvent={{ type: FOLD, occurredAt: null}}
-            captureEvent={captureEvent}
+          <MultiStep
+            timer={timer}
+            eventType={FOLD}
             disabled={!hasEvent(timer, MIX)}
-          />}
+            startEvent={startEvent}
+            captureEvent={captureEvent}
+            hiddenByEvent={bulkEvent}
+            defaultPreviousEvent={mixEvent}
+            defaultNextEvent={bulkEvent}
+          />
           <Step
-            startEvent={folds.slice(-1)[0] || { occurredAt: null }}
+            startEvent={folds.slice(-1)[0] || { type: FOLD, occurredAt: null }}
             endEvent={preshapeEvent}
             targetEvent={bulkEvent}
             captureEvent={captureEvent}
@@ -162,6 +169,7 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
           />
           <Step
             startEvent={hasEvent(timer, PROOF) ? startEvent : proofEvent}
+            endEvent={{ occurredAt: null, type: PROOF }}
             targetEvent={doneEvent}
             captureEvent={captureEvent}
             disabled={'auto'}

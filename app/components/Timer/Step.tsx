@@ -11,13 +11,26 @@ import {
   formatElapsed,
 } from '../../utils/timer'
 
-import { EventType } from '../../utils/timer/types'
+import {
+  EventType,
+  RawEvent,
+  NullEvent
+} from '../../storage/v2/types'
 
 import Clock from './Clock'
 
-const Step: React.FC<any> = ({
+interface Props {
+  startEvent: RawEvent | NullEvent
+  endEvent?: RawEvent | NullEvent
+  targetEvent: RawEvent | NullEvent
+  captureEvent: (type: EventType) => void
+  disabled?: boolean | 'auto'
+  i?: number | null
+}
+
+const Step: React.FC<Props> = ({
   startEvent,
-  endEvent = { occurredAt: null },
+  endEvent = { occurredAt: null, type: EventType.NULL },
   targetEvent,
   captureEvent,
   disabled: disabledSetting,
@@ -26,7 +39,7 @@ const Step: React.FC<any> = ({
   const { type: eventType, occurredAt } = targetEvent
   const isDoneEvent = eventType === EventType.END
   const { occurredAt: startedAt } = startEvent
-  const { occurredAt: endedAt } = endEvent
+  const { occurredAt: endedAt } = endEvent ? endEvent : { occurredAt: null }
   const sinceStart = occurredAt - startedAt
   const hasEnded = endedAt !== null || (occurredAt !== null && isDoneEvent)
 

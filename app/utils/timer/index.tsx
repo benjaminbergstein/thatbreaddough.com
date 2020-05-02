@@ -3,7 +3,7 @@ import {
   BreadTimer,
   RawEvent,
   NullEvent,
-} from './types'
+} from '../../storage/v2/types'
 
 export const formatElapsed: (number) => string = (elapsed) => {
   const pad: (number) => string = (num) => num.toString().padStart(2, '0')
