@@ -5,6 +5,7 @@ import { Main, Box, Text, Anchor, Button } from 'grommet'
 import { FaPlay } from 'react-icons/fa'
 import { GiSlicedBread } from 'react-icons/gi'
 
+import { baseUrl } from '../utils/siteMetadata'
 import Analytics from '../components/Analytics'
 import Layout from '../components/Layout'
 import Modal from '../components/Modal'
@@ -47,7 +48,7 @@ const Feedback: React.FC<any> = ({ start }) => {
     <Text style={{ textAlign: "center"}}>
       <Text size="large" weight="bold">Hey there!</Text>
       <p>Enjoying the timer or having issues?</p>
-      <Button primary target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6" label="Give Feedback!" />
+      <Button color="brand" primary target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6" label="Give Feedback!" />
     </Text>
   </Modal>
 }
@@ -58,6 +59,7 @@ const TimerPage: React.FC<any> = () => {
     <Analytics pageView="Timer" />
     <Head>
       <title>Timer | Sourdough Bread Timer</title>
+      <link rel="canonical" href={`${baseUrl}/sourdough-timer`} />
     </Head>
     <Box fill height={{ min: '100%' }} pad="large" align="center">
       <Box
@@ -80,13 +82,15 @@ const TimerPage: React.FC<any> = () => {
             <p>Skip the "Autolyse" and "Salt" steps if you mix levain, flour and salt at once.</p>
 
 
-            <p>Happy bread making! <Text color="neutral-4"><GiSlicedBread style={{ fontSize: '20px' }} /></Text></p>
+            <p>Happy bread making! <Text color="brand"><GiSlicedBread style={{ fontSize: '20px' }} /></Text></p>
           </Text>
         </Box>
       </Box>
 
       <Feedback start={firstEvent} />
-      <Timer onEvent={(timer) => setFirstEvent(timer.slice(-1)[0].occurredAt)} />
+      <Box fill width={{ max: '1300px' }}>
+        <Timer onEvent={(timer) => setFirstEvent(timer.slice(-1)[0].occurredAt)} />
+      </Box>
     </Box>
   </Layout>
 }

@@ -16,7 +16,7 @@ const Modal: React.FC<Props> = ({ show, onHide, children }) => {
       onClickOutside={onHide}
     >
       <Box pad={{ vertical: 'medium', horizontal: 'large' }}>
-        <Close size="small" color="dark-3" onClick={onHide}><FaTimes /></Close>
+        <Close size="medium" color="dark-3" onClick={onHide}><FaTimes /></Close>
         {children}
       </Box>
     </Layer>

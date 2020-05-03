@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import createPersistedState from 'use-persisted-state'
 
-import { Storage, StorageVersion } from '../storage/types'
-import { BreadTimer } from '../storage/v2/types'
+import { StorageVersion } from '../storage/types'
+import { BreadTimer, Storage } from '../storage/v2/types'
 import runMigrations from '../storage/migrate'
 
 type TimerUpdater = (timer: BreadTimer) => void

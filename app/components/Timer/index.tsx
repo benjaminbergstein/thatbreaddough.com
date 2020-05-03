@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactGa from 'react-ga'
+import styled from 'styled-components'
 import { MdRefresh } from 'react-icons/md'
 
 import {
@@ -28,10 +29,12 @@ import {
 
 import Step from './Step'
 import MultiStep from './MultiStep'
+import SectionHeading from './SectionHeading'
 
 import useStorage from '../../hooks/useStorage'
 
 const {
+  NULL,
   START,
   FEED,
   LEVAIN,
@@ -51,6 +54,8 @@ const {
   BAKE,
   END,
 } = EventType
+
+const FoldTypes = [COIL_FOLD, STRETCH_FOLD, SLAP_FOLD, FOLD, LAMINATE, REST]
 
 interface Props {
   onEvent: (timer: BreadTimer) => void
@@ -93,11 +98,13 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
   const steamEvent = firstEvent(timer, STEAM)
   const bakeEvent = firstEvent(timer, BAKE)
   const doneEvent = firstEvent(timer, END)
+  const firstFold = filterForType(timer, FoldTypes)[0] || { occurredAt: null, type: NULL }
 
   return (
     <Grid fill="horizontal" align="center" justify="center">
       <Box fill>
         <Grid fill="horizontal">
+          <SectionHeading label="Feeds" />
           <MultiStep
             timer={timer}
             eventTypes={[FEED]}
@@ -107,19 +114,32 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
             hiddenByEvent={firstEvent(timer, LEVAIN)}
             defaultPreviousEvent={startEvent}
             defaultNextEvent={firstEvent(timer, LEVAIN)}
+            forceButtons={true}
+            showNothingRecordedMessage={true}
           />
+
+          <SectionHeading label="Pre-ferment" />
           <Step
             startEvent={startEvent}
             endEvent={firstEvent(timer, MIX)}
             targetEvent={firstEvent(timer, LEVAIN)}
             captureEvent={captureEvent}
           />
-          <Step
+
+          <MultiStep
+            timer={timer}
+            eventTypes={[AUTOLYSE]}
+            disabled={!hasEvent(timer, LEVAIN)}
             startEvent={startEvent}
-            endEvent={firstEvent(timer, MIX)}
-            targetEvent={firstEvent(timer, AUTOLYSE)}
             captureEvent={captureEvent}
+            hiddenByEvent={firstEvent(timer, MIX)}
+            defaultPreviousEvent={firstEvent(timer, LEVAIN)}
+            defaultNextEvent={firstEvent(timer, MIX)}
+            forceButtons={true}
+            limit={1}
           />
+
+          <SectionHeading label="Dough mixing" />
           <Step
             startEvent={startEvent}
             endEvent={bakeEvent}
@@ -127,16 +147,24 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
             captureEvent={captureEvent}
             disabled={!hasEvent(timer, LEVAIN)}
           />
-          <Step
-            startEvent={firstEvent(timer, MIX)}
-            endEvent={firstEvent(timer, FOLD)}
-            targetEvent={firstEvent(timer, SALT)}
-            captureEvent={captureEvent}
-            disabled={!hasEvent(timer, MIX)}
-          />
+
           <MultiStep
             timer={timer}
-            eventTypes={[COIL_FOLD, STRETCH_FOLD, SLAP_FOLD, FOLD, LAMINATE, REST]}
+            eventTypes={[SALT]}
+            disabled={!hasEvent(timer, MIX)}
+            startEvent={startEvent}
+            captureEvent={captureEvent}
+            hiddenByEvent={firstFold}
+            defaultPreviousEvent={firstEvent(timer, MIX)}
+            defaultNextEvent={firstFold}
+            forceButtons={true}
+            limit={1}
+          />
+
+          <SectionHeading label="Dough strengthening" />
+          <MultiStep
+            timer={timer}
+            eventTypes={FoldTypes}
             disabled={!hasEvent(timer, MIX)}
             startEvent={startEvent}
             captureEvent={captureEvent}
@@ -144,6 +172,8 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
             defaultPreviousEvent={mixEvent}
             defaultNextEvent={bulkEvent}
           />
+
+          <SectionHeading label="Bulk ferment" />
           <Step
             startEvent={folds.slice(-1)[0] || { type: FOLD, occurredAt: null }}
             endEvent={preshapeEvent}
@@ -151,6 +181,8 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
             captureEvent={captureEvent}
             disabled={!hasEvent(timer, FOLD)}
           />
+
+          <SectionHeading label="Shaping" />
           <Step
             startEvent={bulkEvent}
             endEvent={proofEvent}
@@ -165,6 +197,7 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
             captureEvent={captureEvent}
             disabled={'auto'}
           />
+          <SectionHeading label="Bake!" />
           <Step
             startEvent={proofEvent}
             endEvent={doneEvent}

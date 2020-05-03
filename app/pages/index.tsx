@@ -23,9 +23,10 @@ import Sections from '../utils/infoSections'
 const Cta: React.FC<{ text?: string }> = ({ text = 'Try the Timer' }) => (
   <Box align="center" fill margin={{ vertical: 'medium' }}>
     <Text>
-      <Link href="/timer?ref=home_cta">
+      <Link href="/sourdough-timer?ref=home_cta">
         <Button
           primary
+          color='brand'
           a11yTitle={text}
           label={<Text>
             {text}
@@ -113,7 +114,7 @@ const IndexPage: React.FC<any> = () => {
         <a ref={infoSectionRef} />
         {Sections.map((props, i) => (
           <>
-            {i !== 0 && i !== 2 && <Text color='accent-1' style={{ opacity: '0.5' }}>
+            {i !== 0 && i !== 2 && <Text color='brand' size='large' margin={{ top: 'small', bottom: 'medium' }} style={{ opacity: '0.95' }}>
               <GiSlicedBread />
             </Text>}
             {i === 2 && <Cta text="Record a Bake"/>}
