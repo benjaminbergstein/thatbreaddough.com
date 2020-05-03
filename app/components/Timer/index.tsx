@@ -37,7 +37,12 @@ const {
   LEVAIN,
   AUTOLYSE,
   MIX,
+  COIL_FOLD,
+  STRETCH_FOLD,
+  SLAP_FOLD,
+  LAMINATE,
   FOLD,
+  REST,
   SALT,
   BULK,
   PRESHAPE,
@@ -80,7 +85,7 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
 
   const mixEvent = firstEvent(timer, MIX)
   const bulkEvent = firstEvent(timer, BULK)
-  const folds = mixEvent ? filterForType(timer, FOLD) : []
+  const folds = mixEvent ? filterForType(timer, [FOLD]) : []
   const foldBasis = folds.slice(-1)[0] || mixEvent
 
   const preshapeEvent = firstEvent(timer, PRESHAPE)
@@ -95,7 +100,7 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
         <Grid fill="horizontal">
           <MultiStep
             timer={timer}
-            eventType={FEED}
+            eventTypes={[FEED]}
             disabled={false}
             startEvent={startEvent}
             captureEvent={captureEvent}
@@ -131,7 +136,7 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
           />
           <MultiStep
             timer={timer}
-            eventType={FOLD}
+            eventTypes={[COIL_FOLD, STRETCH_FOLD, SLAP_FOLD, FOLD, LAMINATE, REST]}
             disabled={!hasEvent(timer, MIX)}
             startEvent={startEvent}
             captureEvent={captureEvent}

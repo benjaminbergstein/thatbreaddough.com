@@ -1,3 +1,8 @@
+import React from 'react'
+import styled from 'styled-components'
+import { FaPlus } from 'react-icons/fa'
+import { Text, Button } from 'grommet'
+
 import {
   BreadTimer,
   EventType,
@@ -7,13 +12,14 @@ import {
 
 import {
   filterForType,
+  humanizeType,
 } from '../../utils/timer'
 
 import Step from './Step'
 
 interface Props {
   timer: BreadTimer
-  eventType: EventType
+  eventTypes: EventType[]
   disabled: boolean
   hiddenByEvent: RawEvent
   startEvent: RawEvent
@@ -24,7 +30,7 @@ interface Props {
 
 const MultiStep: React.FC<Props> = ({
   timer,
-  eventType,
+  eventTypes,
   disabled,
   hiddenByEvent,
   startEvent,
@@ -32,8 +38,34 @@ const MultiStep: React.FC<Props> = ({
   defaultNextEvent,
   captureEvent,
 }) => {
-  const events = !disabled ? filterForType(timer, eventType) : []
+  const isMultiple = eventTypes.length > 1
+  const events = !disabled ? filterForType(timer, eventTypes) : []
   const eventCount = events.length
+
+  const showAddEvent = hiddenByEvent.occurredAt === null
+  const addEvent = isMultiple ? (
+    <Text margin={{ vertical: 'small' }}>
+      {eventTypes.map((eventType) => (
+        <Button
+          color='neutral-3'
+          primary
+          disabled={disabled}
+          onClick={() => captureEvent(eventType)}
+          icon={<FaPlus />}
+          label={`${humanizeType(eventType)}`}
+          size="small"
+          margin={{ bottom: 'small', right: 'small' }}
+        />
+      ))}
+    </Text>
+  ) : (
+    <Step
+      startEvent={startEvent}
+      targetEvent={{ type: eventTypes[0], occurredAt: null}}
+      captureEvent={captureEvent}
+      disabled={disabled}
+    />
+  )
 
   return <>
     {events.map((event, index) => (
@@ -46,12 +78,7 @@ const MultiStep: React.FC<Props> = ({
         i={index + 1}
       />
     ))}
-    {hiddenByEvent.occurredAt === null && <Step
-      startEvent={startEvent}
-      targetEvent={{ type: eventType, occurredAt: null}}
-      captureEvent={captureEvent}
-      disabled={disabled}
-    />}
+    {showAddEvent && addEvent}
   </>
 }
 
