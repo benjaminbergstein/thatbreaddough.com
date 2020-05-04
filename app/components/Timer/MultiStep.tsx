@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaPlus } from 'react-icons/fa'
-import { Text, Button } from 'grommet'
+import { Box, Text } from '../System'
+import Button from '../System/Button'
 
 import {
   BreadTimer,
@@ -52,21 +53,21 @@ const MultiStep: React.FC<Props> = ({
   const limitReached = limit !== null && events.length === limit
   const showAddEvent = !hasHiddenByEventOccurred  && !limitReached
   const addEvent = isMultiple || forceButtons ? (
-    <Text>
+    <Box display="flex" flexWrap="wrap" flexDirection="row">
       {eventTypes.map((eventType) => (
         <Button
+          size="small"
+          icon="add"
+          marginRight={1}
+          marginBottom={2}
           key={`add-evt-${eventType}`}
-          color='neutral-3'
-          primary
           disabled={disabled}
           onClick={() => captureEvent(eventType)}
-          icon={<FaPlus />}
-          label={`${humanizeType(eventType)}`}
-          size="small"
-          margin={{ bottom: 'small', right: 'small' }}
-        />
+        >
+          {`${humanizeType(eventType)}`}
+        </Button>
       ))}
-    </Text>
+    </Box>
   ) : (
     <Step
       startEvent={startEvent}
@@ -87,16 +88,19 @@ const MultiStep: React.FC<Props> = ({
     {(showNothingRecordedMessage === true && hasHiddenByEventOccurred && events.length === 0) && (
       <Text color="neutral-3" weight="bold">Nothing recorded.</Text>
     )}
-    {events.map((event, index) => (
-      <Step
-        key={`event-${event.type}-${index}`}
-        startEvent={index === 0 ? defaultPreviousEvent : events[index - 1]}
-        endEvent={eventCount === index + 1 ? defaultNextEvent : events[index + 1]}
-        targetEvent={event}
-        captureEvent={captureEvent}
-        i={limit === 1 ? undefined : getCount(event.type)}
-      />
-    ))}
+    {events.map((event, index) => {
+      const count = getCount(event.type)
+      return (
+        <Step
+          key={`event-${event.type}-${count}`}
+          startEvent={index === 0 ? defaultPreviousEvent : events[index - 1]}
+          endEvent={eventCount === index + 1 ? defaultNextEvent : events[index + 1]}
+          targetEvent={event}
+          captureEvent={captureEvent}
+          i={limit === 1 ? undefined : count}
+        />
+      )
+    })}
     {showAddEvent && addEvent}
   </>
 }

@@ -69,6 +69,12 @@ export const filterForType: (
 ) => RawEvent[] = (timer, desiredTypes) =>
   timer.filter(({ type }) => desiredTypes.indexOf(type) >= 0)
 
+export const someEvent: (
+  timer: BreadTimer,
+  eventTypes: EventType[]
+) => boolean = (timer, eventTypes) =>
+  filterForType(timer, eventTypes).length > 0
+
 export const hasEvent: (
   timer: BreadTimer,
   eventType: EventType

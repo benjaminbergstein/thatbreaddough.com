@@ -3,8 +3,9 @@ import {
   Grid,
   Text,
   Box,
-  Button,
-} from 'grommet'
+  Spinner,
+} from '../../System'
+import Button from '../../System/Button'
 import { FaCheckCircle } from 'react-icons/fa'
 
 import { EventType } from '../../../storage/v2/types'
@@ -26,42 +27,30 @@ const Started: React.FC<Props> = ({
   isDoneEvent,
   children: header,
 }) => (
-  <Box
-    background="white"
-    elevation="xsmall"
-    border={{ color: 'light-1' }}
-    round='xsmall'
-    pad="medium"
-    margin={{ bottom: "medium" }}
-  >
-    <Box>
+  <>
+    <Box flex="1">
       {header}
     </Box>
-    <Grid
-      margin={{ top: 'small' }}
-      columns={['1/2', '1/2']}
-      rows={["auto"]}
+    <Box>
+      {!isDoneEvent && <Clock start={occurredAt} end={endedAt} />}
+      {isDoneEvent && '-'}
+    </Box>
+    <Box
+      flexBasis="30px"
+      display="flex"
+      justifyContent="flex-end"
+      alignItems="center"
+      position="relative"
+      top="2px"
     >
-      <Box><Text color="dark-3" size="small">start</Text></Box>
-      <Box><Text color="dark-3" size="small">elapsed</Text></Box>
-
-      <Box>
-        <Text color="dark-2">
-          <Clock start={startedAt} end={occurredAt} />
-        </Text>
-      </Box>
-
-      <Box>
-        <Text color="dark-2">
-          {!isDoneEvent && <Clock start={occurredAt} end={endedAt} />}
-          {isDoneEvent && '-'}
-          {hasEnded && <Text size="small" color="green">
-            <span>&nbsp;&nbsp;</span><FaCheckCircle />
-          </Text>}
-        </Text>
-      </Box>
-    </Grid>
-  </Box>
+      {!hasEnded && <Text fontSize={2} color="brand">
+        <Spinner />
+      </Text>}
+      {hasEnded && <Text fontSize={1} color="green">
+        <FaCheckCircle />
+      </Text>}
+    </Box>
+  </>
 )
 
 export default Started

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import ReactGa from 'react-ga'
 import Head from 'next/head'
-import { Main, Box, Text, Anchor, Button } from 'grommet'
+import { Card, Heading, Main, Box, Text, Anchor } from '../components/System'
+import Button from '../components/System/Button'
 import { FaPlay } from 'react-icons/fa'
 import { GiSlicedBread } from 'react-icons/gi'
 
 import { baseUrl } from '../utils/siteMetadata'
 import Analytics from '../components/Analytics'
-import Layout from '../components/Layout'
+import Layout from '../components/Layout2'
 import Modal from '../components/Modal'
 import Timer from '../components/Timer'
 
@@ -45,11 +46,33 @@ const Feedback: React.FC<any> = ({ start }) => {
   const feedbackClicked = () => { hideModal(false) }
 
   return <Modal onHide={hideModal} show={show}>
-    <Text style={{ textAlign: "center"}}>
-      <Text size="large" weight="bold">Hey there!</Text>
+    <Card
+      bg="white"
+      position="relative"
+      m={4}
+      maxWidth="500px"
+      marginTop={10}
+      flexBasis="30%"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      alignItems="center"
+    >
+      <Box marginTop={8}><Heading>Hey there!</Heading></Box>
       <p>Enjoying the timer or having issues?</p>
-      <Button color="brand" primary target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6" label="Give Feedback!" />
-    </Text>
+      <Box marginBottom={8}>
+        <Button target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6">Give Feedback!</Button>
+        <Button
+          marginTop={2}
+          fontWeight={1}
+          fontSize={0}
+          color='darks.4'
+          plain
+          onClick={hideModal}
+          style={{ textDecoration: 'underline' }}
+        >I'll give feedback later.</Button>
+      </Box>
+    </Card>
   </Modal>
 }
 
@@ -61,35 +84,17 @@ const TimerPage: React.FC<any> = () => {
       <title>Timer | Sourdough Bread Timer</title>
       <link rel="canonical" href={`${baseUrl}/sourdough-timer`} />
     </Head>
-    <Box fill height={{ min: '100%' }} pad="large" align="center">
-      <Box
-        width={{ max: '600px' }}
-        flex={{ shrink: 0 }}
-        align="center"
-        justify="center"
-        margin={{ bottom: "large" }}
-      >
-        <Text weight="bold" size="xxlarge" color="dark-3">Timer</Text>
 
-        <Box margin={{ vertical: "medium" }}>
-          <Text weight="normal" size="medium" color="dark-2">
-            <p>This sourdough bread timer uses a generic structure
-            for dough preparation to track the progress of your dough.</p>
-
-            <p>Click the Play button (<FaPlay style={{ fontSize: '10px' }}/>) after
-            you complete each step toward your loaf.</p>
-
-            <p>Skip the "Autolyse" and "Salt" steps if you mix levain, flour and salt at once.</p>
-
-
-            <p>Happy bread making! <Text color="brand"><GiSlicedBread style={{ fontSize: '20px' }} /></Text></p>
-          </Text>
+    <Box display="flex" flexDirection="row" justifyContent="center">
+      <Box flexBasis="500px" flexGrow="0">
+        <Box margin={4}>
+          <Heading>Sourdough Timer</Heading>
         </Box>
-      </Box>
 
-      <Feedback start={firstEvent} />
-      <Box fill width={{ max: '1300px' }}>
-        <Timer onEvent={(timer) => setFirstEvent(timer.slice(-1)[0].occurredAt)} />
+        <Feedback start={firstEvent} />
+        <Box>
+          <Timer onEvent={(timer) => setFirstEvent(timer.slice(-1)[0].occurredAt)} />
+        </Box>
       </Box>
     </Box>
   </Layout>

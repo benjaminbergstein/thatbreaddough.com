@@ -18,6 +18,7 @@ export enum EventType {
   COIL_FOLD = 'coil-fold',
   LAMINATE = 'lamination',
   FOLD = 'fold',
+  RUBAUD = 'rubaud',
   REST = 'rest',
   BULK = 'bulk',
   PRESHAPE = 'preshape',

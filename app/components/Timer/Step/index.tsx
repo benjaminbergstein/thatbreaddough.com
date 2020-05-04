@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text } from 'grommet'
+import { Card, Text } from '../../System'
 
 import {
   formatElapsed,
@@ -52,30 +52,36 @@ const Step: React.FC<Props> = ({
     ))
   }, [startEvent.occurredAt, disabledSetting])
 
-  const header = <Text weight="bold" color="neutral-3">
+  const header = <Text fontWeight="bold" color="heading1">
     <span style={{ whiteSpace: 'nowrap', textDecoration: wasSkipped ? 'line-through' : 'none' }}>
       {humanizeType(eventType, i)}
     </span>
   </Text>
 
-  if (wasStarted) return (
-    <Started {...{
-      startedAt,
-      endedAt,
-      occurredAt,
-      hasEnded,
-      isDoneEvent,
-    }}>{header}</Started>
-  )
-
-  return (
-    <Unstarted {...{
-      eventType,
-      disabled,
-      wasSkipped,
-      captureEvent,
-    }}>{header}</Unstarted>
-  )
+  return <Card
+    background="white"
+    marginBottom={2}
+    display="flex"
+    flexDirection="row"
+    alignItems="center"
+  >
+    {wasStarted ? (
+      <Started {...{
+        startedAt,
+        endedAt,
+        occurredAt,
+        hasEnded,
+        isDoneEvent,
+      }}>{header}</Started>
+    ) : (
+      <Unstarted {...{
+        eventType,
+        disabled,
+        wasSkipped,
+        captureEvent,
+      }}>{header}</Unstarted>
+    )}
+  </Card>
 }
 
 export default Step
