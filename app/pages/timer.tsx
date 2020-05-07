@@ -45,7 +45,7 @@ const Feedback: React.FC<any> = ({ start }) => {
 
   const feedbackClicked = () => { hideModal(false) }
 
-  return <Modal onHide={hideModal} show={true}>
+  return <Modal onHide={hideModal} show={show}>
     <Card
       bg="white"
       position="relative"
