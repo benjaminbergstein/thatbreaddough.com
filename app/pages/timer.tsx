@@ -45,11 +45,14 @@ const Feedback: React.FC<any> = ({ start }) => {
 
   const feedbackClicked = () => { hideModal(false) }
 
-  return <Modal onHide={hideModal} show={show}>
+  return <Modal onHide={hideModal} show={true}>
     <Card
       bg="white"
       position="relative"
-      m={4}
+      mx="auto"
+      p="inherit"
+      paddingLeft={9}
+      paddingRight={9}
       maxWidth="500px"
       marginTop={10}
       flexBasis="30%"
