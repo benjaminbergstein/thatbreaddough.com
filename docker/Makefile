@@ -31,5 +31,8 @@ sitemap:
 nginx:
 	${COMPOSE_CMD} up -d nginx
 
+pull:
+	git pull --rebase origin master
+
 release: ENVIRONMENT=production
-release: build stop start nginx sitemap
+release: pull build stop start nginx sitemap
