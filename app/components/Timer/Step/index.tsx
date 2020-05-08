@@ -59,6 +59,7 @@ const Step: React.FC<Props> = ({
   </Text>
 
   return <Card
+    key={`Event-${eventType}-${''+occurredAt}`}
     background="white"
     marginBottom={2}
     display="flex"
@@ -67,6 +68,7 @@ const Step: React.FC<Props> = ({
   >
     {wasStarted ? (
       <Started {...{
+        eventType,
         startedAt,
         endedAt,
         occurredAt,
@@ -83,5 +85,7 @@ const Step: React.FC<Props> = ({
     )}
   </Card>
 }
+
+Step.displayName = 'Step'
 
 export default Step

@@ -12,6 +12,7 @@ import { EventType } from '../../../storage/v2/types'
 import Clock from '../Clock'
 
 interface Props {
+  eventType: EventType,
   startedAt: number
   occurredAt: number
   endedAt: number
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const Started: React.FC<Props> = ({
+  eventType,
   startedAt,
   endedAt,
   hasEnded,
@@ -27,7 +29,7 @@ const Started: React.FC<Props> = ({
   isDoneEvent,
   children: header,
 }) => (
-  <>
+  <React.Fragment key={`Started-${eventType}-${''+occurredAt}`}>
     <Box flex="1">
       {header}
     </Box>
@@ -50,7 +52,9 @@ const Started: React.FC<Props> = ({
         <FaCheckCircle />
       </Text>}
     </Box>
-  </>
+  </React.Fragment>
 )
+
+Started.displayName = 'Started'
 
 export default Started

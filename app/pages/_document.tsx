@@ -53,7 +53,6 @@ export default class MyDocument extends Document {
           <style>{`
             #__next { height: 100% }
           `}</style>
-          {this.props.styles}
         </Head>
         <body style={{ margin: 0, height: '100%' }}>
           <Main />

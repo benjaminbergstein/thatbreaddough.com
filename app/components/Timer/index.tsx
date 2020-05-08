@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect, useEffect } from 'react'
 import ReactGa from 'react-ga'
 import styled from 'styled-components'
 
@@ -9,13 +9,16 @@ import {
   Box,
   Main,
 } from '../System'
+
 import Button from '../System/Button'
+import Feedback from '../Feedback'
 
 import {
   EventType,
   RawEvent,
   NullEvent,
   BreadTimer,
+  nullEvent,
 } from '../../storage/v2/types'
 
 import {
@@ -25,6 +28,7 @@ import {
   addEvent,
   hasEvent,
   someEvent,
+  isNullEvent,
 } from '../../utils/timer'
 
 import Step from './Step'
@@ -60,21 +64,26 @@ const {
 
 const FoldTypes = [COIL_FOLD, STRETCH_FOLD, SLAP_FOLD, FOLD, LAMINATE, REST, RUBAUD]
 
-interface Props {
-  onEvent: (timer: BreadTimer) => void
-}
+interface Props {}
 
-const Timer: React.FC<Props> = ({ onEvent }) => {
-  const [storage, setTimer, storageVersion, needsMigration] = useStorage()
+const last: (arr: any[]) => any = (arr) => arr.slice(-1)[0]
+
+const Timer: React.FC<Props> = ({}) => {
+  const [feedbackEvent, setFeedBackEvent] = useState<RawEvent>(nullEvent)
+  const [storage, saveTimer, storageVersion, needsMigration] = useStorage()
+  const [timer, updateTimer] = useState<BreadTimer>([])
+
   if (needsMigration) return null
-  const { timer } = storage
+
+  useLayoutEffect(() => { updateTimer(storage.timer) }, [storage.timer])
 
   const startEvent = firstEvent(timer, START)
 
   const resetTimer = () => {
     const hasConfirmedReset = confirm('Are you sure? All data will be lost.')
     if (!hasConfirmedReset) return
-    setTimer([])
+    setFeedBackEvent(nullEvent)
+    saveTimer([])
   }
 
   const captureEvent: (type: EventType) => void = (type) => {
@@ -86,14 +95,14 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
       })
     } catch (e) {}
     const newTimer = addEvent(timer, type)
-    setTimer(newTimer)
-    onEvent(newTimer)
+    if (isNullEvent(feedbackEvent)) setFeedBackEvent(last(newTimer))
+    saveTimer(newTimer)
   }
 
   const mixEvent = firstEvent(timer, MIX)
   const bulkEvent = firstEvent(timer, BULK)
   const folds = mixEvent ? filterForType(timer, FoldTypes) : []
-  const foldBasis = folds.slice(-1)[0] || mixEvent
+  const foldBasis = last(folds) || mixEvent
 
   const preshapeEvent = firstEvent(timer, PRESHAPE)
   const proofEvent = firstEvent(timer, PROOF)
@@ -180,7 +189,7 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
         <SectionHeading label="Bulk ferment" firstEvent={bulkEvent} />
 
         <Step
-          startEvent={folds.slice(-1)[0] || { type: FOLD, occurredAt: null }}
+          startEvent={last(folds) || { type: FOLD, occurredAt: null }}
           endEvent={preshapeEvent}
           targetEvent={bulkEvent}
           captureEvent={captureEvent}
@@ -245,6 +254,8 @@ const Timer: React.FC<Props> = ({ onEvent }) => {
           </Button>
         </Box>
       </Box>
+
+      <Feedback countEvents={timer.length} start={feedbackEvent.occurredAt} />
     </TickProvider>
   )
 }

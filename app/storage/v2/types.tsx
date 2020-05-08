@@ -40,6 +40,11 @@ export interface NullEvent {
   occurredAt: null
 }
 
+export const nullEvent: NullEvent = {
+  type: EventType.NULL,
+  occurredAt: null,
+}
+
 export interface EventInfo extends RawEvent {
   eventType: EventType,
   startedAt: number,

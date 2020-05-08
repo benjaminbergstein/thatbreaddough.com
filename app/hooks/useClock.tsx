@@ -6,7 +6,9 @@ const useTick: () => number = () => {
   useEffect(() => {
     const { setInterval, clearInterval } = window as any
     const interval = setInterval(() => {
-      setTick(+new Date())
+      const newTick = +new Date()
+      // console.log((newTick - tick) / 1000)
+      setTick(newTick)
     }, 100)
 
     return () => { clearInterval(interval) }

@@ -81,6 +81,13 @@ export const hasEvent: (
 ) => boolean = (timer, eventType) =>
   firstEvent(timer, eventType).occurredAt !== null
 
+export const isNullEvent: (event: RawEvent) => boolean = (event) => (
+  event === undefined ||
+  event === null ||
+  event.occurredAt === null ||
+  event.type === EventType.NULL
+)
+
 export const addEvent: (
   timer: BreadTimer,
   eventType: EventType
