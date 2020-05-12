@@ -7,7 +7,7 @@ import {
   Text,
   Heading,
   Box,
-  Main,
+  Main
 } from '../System'
 
 import Button from '../System/Button'
@@ -18,7 +18,7 @@ import {
   RawEvent,
   NullEvent,
   BreadTimer,
-  nullEvent,
+  nullEvent
 } from '../../storage/v2/types'
 
 import {
@@ -28,7 +28,7 @@ import {
   addEvent,
   hasEvent,
   someEvent,
-  isNullEvent,
+  isNullEvent
 } from '../../utils/timer'
 
 import Step from './Step'
@@ -59,16 +59,14 @@ const {
   PROOF,
   STEAM,
   BAKE,
-  END,
+  END
 } = EventType
 
 const FoldTypes = [COIL_FOLD, STRETCH_FOLD, SLAP_FOLD, FOLD, LAMINATE, REST, RUBAUD]
 
-interface Props {}
-
 const last: (arr: any[]) => any = (arr) => arr.slice(-1)[0]
 
-const Timer: React.FC<Props> = ({}) => {
+const Timer: React.FC<{}> = () => {
   const [feedbackEvent, setFeedBackEvent] = useState<RawEvent>(nullEvent)
   const [storage, saveTimer, storageVersion, needsMigration] = useStorage()
   const [timer, updateTimer] = useState<BreadTimer>([])
@@ -91,7 +89,7 @@ const Timer: React.FC<Props> = ({}) => {
       ReactGa.event({
         category: 'Timer',
         action: 'Step captured',
-        label: type,
+        label: type
       })
     } catch (e) {}
     const newTimer = addEvent(timer, type)

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Heading, Box, Text } from '../System'
 
 import {
-  RawEvent,
+  RawEvent
 } from '../../storage/v2/types'
 
 const Wrapper = styled(Box)`
@@ -20,11 +20,11 @@ const formatDate = (timestamp) => {
 }
 
 const SectionHeading: React.FC<{
-  label: string,
-  firstEvent?: RawEvent,
+  label: string;
+  firstEvent?: RawEvent;
 }> = ({
   label,
-  firstEvent = undefined,
+  firstEvent = undefined
 }) => (
   <Box
     marginTop={7}

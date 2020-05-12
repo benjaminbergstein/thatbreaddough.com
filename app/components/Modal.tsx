@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import { FaTimes } from 'react-icons/fa'
-import { Box, Text } from './System'
+import { Box } from './System'
 import Button from './System/Button'
 
 interface Props {
-  show: boolean
-  onHide: () => void
+  show: boolean;
+  onHide: () => void;
 }
 
 const Modal: React.FC<Props> = ({ show, onHide, children }) => {

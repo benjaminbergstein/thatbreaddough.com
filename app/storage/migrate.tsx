@@ -1,5 +1,4 @@
 import { Storage } from './types'
-import { BreadTimer as StorageV1 } from './v1/types'
 import { Storage as StorageV2 } from './v2/types'
 
 const v1: (timer: Storage) => StorageV2 = (timer) => {
@@ -7,7 +6,7 @@ const v1: (timer: Storage) => StorageV2 = (timer) => {
 
   return {
     version: 'v2',
-    timer,
+    timer
   } as StorageV2
 }
 

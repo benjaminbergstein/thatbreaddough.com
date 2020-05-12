@@ -3,7 +3,7 @@ import {
   Grid,
   Text,
   Box,
-  Spinner,
+  Spinner
 } from '../../System'
 import Button from '../../System/Button'
 import { FaCheckCircle } from 'react-icons/fa'
@@ -12,12 +12,12 @@ import { EventType } from '../../../storage/v2/types'
 import Clock from '../Clock'
 
 interface Props {
-  eventType: EventType,
-  startedAt: number
-  occurredAt: number
-  endedAt: number
-  hasEnded: boolean
-  isDoneEvent: boolean
+  eventType: EventType;
+  startedAt: number;
+  occurredAt: number;
+  endedAt: number;
+  hasEnded: boolean;
+  isDoneEvent: boolean;
 }
 
 const Started: React.FC<Props> = ({
@@ -27,9 +27,9 @@ const Started: React.FC<Props> = ({
   hasEnded,
   occurredAt,
   isDoneEvent,
-  children: header,
+  children: header
 }) => (
-  <React.Fragment key={`Started-${eventType}-${''+occurredAt}`}>
+  <React.Fragment key={`Started-${eventType}-${'' + occurredAt}`}>
     <Box flex="1">
       {header}
     </Box>

@@ -1,11 +1,11 @@
-import { TiHome, TiStopwatch, TiBook  } from 'react-icons/ti'
+import { TiHome, TiStopwatch, TiBook } from 'react-icons/ti'
 import styled from 'styled-components'
 
 import {
   Anchor,
   Box,
   Nav,
-  Grommet,
+  Grommet
 } from 'grommet'
 
 import NavLink from './NavLink'
@@ -13,31 +13,33 @@ import NavLink from './NavLink'
 const theme = {
   button: {
     extend: ({ colorValue, primary }) => {
-      if (colorValue === 'brand' && primary === true) return `
+      if (colorValue === 'brand' && primary === true) {
+        return `
       font-weight: 900;
       color: white;`
+      }
       return ''
     }
   },
   global: {
     colors: {
-      brand: { dark: '#937674', 'light': '#937674' },
+      brand: { dark: '#937674', light: '#937674' }
     },
     font: {
       family: 'Helvetica Neue',
       size: '14px',
-      height: '20px',
-    },
-  },
-};
+      height: '20px'
+    }
+  }
+}
 
 interface Props {
-  nav?: boolean
+  nav?: boolean;
 }
 const Layout: React.FC<Props> = ({ nav = true, children }) => (
   <Grommet theme={theme} style={{ height: '100%' }}>
     <Box height={{ min: '100%' }}>
-      <Nav direction="row" background={nav ? "light-1" : 'white'} pad={{ top: '10px', bottom: '8px', horizontal: '12px' }}>
+      <Nav direction="row" background={nav ? 'light-1' : 'white'} pad={{ top: '10px', bottom: '8px', horizontal: '12px' }}>
         <NavLink href="/" Icon={TiHome} iconOnly label="Home" />
         <NavLink href="/sourdough-timer" Icon={TiStopwatch} label="Timer" />
         <NavLink href="/glossary" Icon={TiBook} label="Glossary" />
@@ -47,7 +49,6 @@ const Layout: React.FC<Props> = ({ nav = true, children }) => (
     </Box>
   </Grommet>
 )
-
 
 const Footer = styled.footer`
   position: relative;

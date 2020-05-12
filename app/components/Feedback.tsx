@@ -6,11 +6,11 @@ import Button from './System/Button'
 import Modal from './Modal'
 
 interface Props {
-  countEvents: number
-  start: number
+  countEvents: number;
+  start: number;
 }
 
-const Feedback: React.FC<any> = ({ countEvents, start }) => {
+const Feedback: React.FC<Props> = ({ countEvents, start }) => {
   const [show, setShow] = useState<boolean>(false)
   const [wasShown, setWasShown] = useState<boolean>(false)
 
@@ -25,25 +25,26 @@ const Feedback: React.FC<any> = ({ countEvents, start }) => {
         setWasShown(true)
         ReactGa.event({
           category: 'Feedback',
-          action: 'Shown',
+          action: 'Shown'
         })
       }
     })
 
-    return () => { clearInterval(interval) }
+    const cleanup: () => void = () => { clearInterval(interval) }
+    return cleanup
   })
 
-  const hideModal = (dismissed = true) => {
+  const hideModal: (dismissed?: boolean) => void = (dismissed = true) => {
     setShow(false)
     ReactGa.event({
       category: 'Feedback',
-      action: dismissed ? 'Dismissed' : 'Clicked',
+      action: dismissed ? 'Dismissed' : 'Clicked'
     })
   }
 
   const feedbackClicked = () => { hideModal(false) }
 
-  return <Modal onHide={hideModal} show={show}>
+  return <Modal onHide={() => hideModal()} show={show}>
     <Card
       bg="white"
       position="relative"
@@ -71,7 +72,7 @@ const Feedback: React.FC<any> = ({ countEvents, start }) => {
           plain
           onClick={hideModal}
           style={{ textDecoration: 'underline' }}
-        >I'll give feedback later.</Button>
+        >I&apos;ll give feedback later.</Button>
       </Box>
     </Card>
   </Modal>

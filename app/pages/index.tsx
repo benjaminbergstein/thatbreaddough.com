@@ -9,7 +9,7 @@ import {
   Main,
   Button,
   Text,
-  Grid,
+  Grid
 } from 'grommet'
 import { FaChevronRight } from 'react-icons/fa'
 import { GiSlicedBread } from 'react-icons/gi'
@@ -60,7 +60,7 @@ const IndexPage: React.FC<any> = () => {
               width={{ max: '500px' }}
               align="center"
               style={{ zIndex: 2 }}
-              pad={{ horizontal: "large", top: "xlarge", bottom: 'small' }}
+              pad={{ horizontal: 'large', top: 'xlarge', bottom: 'small' }}
             >
               <Text as="h2" size="large" weight="bold" color="dark-5" margin={{ vertical: '0px' }}>
                 That Bread Dough

@@ -25,7 +25,7 @@ const useStorage = () => {
   const setTimer: (timer: BreadTimer) => void = (timer: BreadTimer) => {
     setStorage({
       ...storage,
-      timer,
+      timer
     })
   }
 

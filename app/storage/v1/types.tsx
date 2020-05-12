@@ -3,7 +3,7 @@ export enum EventType {
   LEVAIN = 'levain build',
   AUTOLYSE = 'autolyse',
   SALT = 'salt added',
-  MIX =  'levain mix',
+  MIX = 'levain mix',
   STRETCH_FOLD = 'stretch-fold',
   COIL_FOLD = 'coil-fold',
   LAMINATE = 'lamination',
@@ -18,13 +18,13 @@ export enum EventType {
 }
 
 export interface RawEvent {
-  type: EventType
-  occurredAt: number
+  type: EventType;
+  occurredAt: number;
 }
 
 export interface NullEvent {
-  type: EventType
-  occurredAt: null
+  type: EventType;
+  occurredAt: null;
 }
 
 export type BreadEvent = RawEvent | NullEvent

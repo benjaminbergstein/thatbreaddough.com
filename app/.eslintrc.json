@@ -6,7 +6,9 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "standard"
+        "standard",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -25,5 +27,7 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off"
     }
 }

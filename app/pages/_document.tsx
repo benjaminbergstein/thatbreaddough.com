@@ -2,14 +2,14 @@ import Document, { DocumentContext, Html, Head, Main, NextScript } from 'next/do
 import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps (ctx) {
     const sheet = new ServerStyleSheet()
     const originalRenderPage = ctx.renderPage
 
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+          enhanceApp: App => props => sheet.collectStyles(<App {...props} />)
         })
 
       const initialProps = await Document.getInitialProps(ctx)
@@ -20,14 +20,14 @@ export default class MyDocument extends Document {
             {initialProps.styles}
             {sheet.getStyleElement()}
           </>
-        ),
+        )
       }
     } finally {
       sheet.seal()
     }
   }
 
-  render() {
+  render () {
     return (
       <Html style={{ height: '100%' }}>
         <Head>
@@ -40,7 +40,7 @@ export default class MyDocument extends Document {
           <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png"/>
           <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png"/>
           <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png"/>
-          <link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png"/>
+          <link rel="icon" type="image/png" sizes="192x192" href="icons/android-icon-192x192.png"/>
           <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png"/>
           <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png"/>
           <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png"/>

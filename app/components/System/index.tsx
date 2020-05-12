@@ -9,7 +9,7 @@ import {
   layout,
   flexbox,
   color,
-  typography,
+  typography
 } from 'styled-system'
 import { FaSpinner } from 'react-icons/fa'
 
@@ -19,7 +19,7 @@ const darks = [
   '#333',
   '#505050',
   '#666',
-  '#777',
+  '#777'
 ]
 const lights = [
   '#aaa',
@@ -27,7 +27,7 @@ const lights = [
   '#ccc',
   '#ddd',
   '#eee',
-  '#fff',
+  '#fff'
 ]
 export const theme = {
   colors: {
@@ -38,9 +38,9 @@ export const theme = {
     darks,
     grayscale: [
       ...darks,
-      ...lights.reverse(),
+      ...lights.reverse()
     ],
-    ['orange/dark']: '#bd703d',
+    'orange/dark': '#bd703d'
   },
   fontSizes: [12, 14, 16, 18, 20, 24, 32],
   fontWeights: [100, 300, 500, 700, 900],
@@ -63,7 +63,7 @@ const SpinnerText = styled(Text)`
   transform-origin: 50% 42%;
 `
 
-export const Spinner: React.FC<{ Icon: React.Component } & any> = ({ Icon = FaSpinner, ...props }) => (
+export const Spinner: React.FC<{ Icon: React.Component } & any> = ({ Icon = FaSpinner }) => (
   <SpinnerText><Icon /></SpinnerText>
 )
 
@@ -78,8 +78,8 @@ export const Box = styled.div({}, space, layout, position, flexbox, background, 
 export const Card = styled(Box)``
 Card.defaultProps = {
   p: 4,
-  borderRadius: "3px",
-  boxShadow: "0px 1px 2px 0px #bbb",
+  borderRadius: '3px',
+  boxShadow: '0px 1px 2px 0px #bbb'
 }
 
 export const Main = Box
@@ -94,7 +94,7 @@ Heading.defaultProps = {
   fontWeight: 3,
   fontSize: 4,
   as: 'h1',
-  color: 'heading1',
+  color: 'heading1'
 }
 
 const BaseStyles = styled.div`
@@ -102,7 +102,7 @@ const BaseStyles = styled.div`
   font-size: 16px;
 `
 
-const System: React.FC<any> = ({ children }) => (
+const System: React.FC<{}> = ({ children }) => (
   <ThemeProvider theme={theme}>
     <BaseStyles>{children}</BaseStyles>
   </ThemeProvider>

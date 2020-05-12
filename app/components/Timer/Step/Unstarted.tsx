@@ -1,20 +1,20 @@
 import React from 'react'
 import {
   Text,
-  Box,
+  Box
 } from '../../System'
 import Button from '../../System/Button'
 import { FaPlay } from 'react-icons/fa'
 
 import {
-  EventType,
+  EventType
 } from '../../../storage/v2/types'
 
 interface Props {
-  disabled: boolean,
-  wasSkipped: boolean,
-  eventType: EventType,
-  captureEvent: (type: EventType) => void,
+  disabled: boolean;
+  wasSkipped: boolean;
+  eventType: EventType;
+  captureEvent: (type: EventType) => void;
 }
 
 const Unstarted: React.FC<Props> = ({
@@ -22,7 +22,7 @@ const Unstarted: React.FC<Props> = ({
   wasSkipped,
   eventType,
   captureEvent,
-  children: header,
+  children: header
 }) => (
   <>
     <Box flex="1">

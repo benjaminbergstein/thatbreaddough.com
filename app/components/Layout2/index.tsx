@@ -3,7 +3,7 @@ import System, { Anchor, Box } from '../System'
 import Button from '../System/Button'
 
 interface Props {
-  nav?: boolean
+  nav?: boolean;
 }
 
 const NavLink: React.FC<any> = (props) => <Button {...props} />
@@ -13,7 +13,7 @@ NavLink.defaultProps = {
   as: 'a',
   fontWeight: 1,
   fontSize: 1,
-  marginRight: 2,
+  marginRight: 2
 }
 
 const Layout: React.FC<Props> = ({ nav = true, children }) => (
@@ -22,7 +22,7 @@ const Layout: React.FC<Props> = ({ nav = true, children }) => (
       <Box
         display="flex"
         flexDirection="row"
-        bg={nav ? "light1" : 'white'}
+        bg={nav ? 'light1' : 'white'}
         paddingTop="10px"
         paddingBottom="8px"
         paddingLeft="12px"

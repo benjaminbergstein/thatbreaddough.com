@@ -5,21 +5,21 @@ import { IconType } from 'react-icons'
 
 import {
   Box,
-  Anchor,
+  Anchor
 } from 'grommet'
 
 interface Props {
-  href: string
-  iconOnly?: boolean
-  label: string
-  Icon: IconType
+  href: string;
+  iconOnly?: boolean;
+  label: string;
+  Icon: IconType;
 }
 
 const NavLink: React.FC<Props> = ({
   href,
   iconOnly = false,
   label,
-  Icon,
+  Icon
 }) => (
   <>
     <Link href={`${href}?ref=global_nav`}>

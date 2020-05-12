@@ -4,7 +4,7 @@ import { Card, Text } from '../../System'
 import {
   formatElapsed,
   humanizeType,
-  getEventInfo,
+  getEventInfo
 } from '../../../utils/timer'
 
 import {
@@ -17,12 +17,12 @@ import Unstarted from './Unstarted'
 import Started from './Started'
 
 interface Props {
-  startEvent: RawEvent | NullEvent
-  endEvent?: RawEvent | NullEvent
-  targetEvent: RawEvent | NullEvent
-  captureEvent: (type: EventType) => void
-  disabled?: boolean | 'auto'
-  i?: number | null
+  startEvent: RawEvent | NullEvent;
+  endEvent?: RawEvent | NullEvent;
+  targetEvent: RawEvent | NullEvent;
+  captureEvent: (type: EventType) => void;
+  disabled?: boolean | 'auto';
+  i?: number | null;
 }
 
 const Step: React.FC<Props> = ({
@@ -31,7 +31,7 @@ const Step: React.FC<Props> = ({
   targetEvent,
   captureEvent,
   disabled: disabledSetting,
-  i = null,
+  i = null
 }) => {
   const {
     eventType,
@@ -41,7 +41,7 @@ const Step: React.FC<Props> = ({
     isDoneEvent,
     hasEnded,
     wasStarted,
-    wasSkipped,
+    wasSkipped
   } = getEventInfo(targetEvent, startEvent, endEvent)
 
   const [disabled, setDisabled] = useState<boolean>(true)
@@ -59,7 +59,7 @@ const Step: React.FC<Props> = ({
   </Text>
 
   return <Card
-    key={`Event-${eventType}-${''+occurredAt}`}
+    key={`Event-${eventType}-${'' + occurredAt}`}
     background="white"
     marginBottom={2}
     display="flex"
@@ -73,14 +73,14 @@ const Step: React.FC<Props> = ({
         endedAt,
         occurredAt,
         hasEnded,
-        isDoneEvent,
+        isDoneEvent
       }}>{header}</Started>
     ) : (
       <Unstarted {...{
         eventType,
         disabled,
         wasSkipped,
-        captureEvent,
+        captureEvent
       }}>{header}</Unstarted>
     )}
   </Card>

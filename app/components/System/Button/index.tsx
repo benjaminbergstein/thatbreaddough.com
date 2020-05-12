@@ -1,18 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  background,
-  position,
-  border,
-  shadow,
-  space,
-  layout,
-  flexbox,
   color,
-  typography,
+  typography
 } from 'styled-system'
 import { FaTrashAlt, FaPlus, FaPlay } from 'react-icons/fa'
-import { TiHome, TiStopwatch, TiBook  } from 'react-icons/ti'
+import { TiHome, TiStopwatch, TiBook } from 'react-icons/ti'
 import { Box } from '..'
 
 type ButtonSize = 'small' | 'normal' | 'large'
@@ -23,16 +16,16 @@ const baseProps = {
   justifyContent: 'center',
   alignItems: 'center',
   color: 'white',
-  bg: 'brand',
+  bg: 'brand'
 }
 
 interface SizeProps {
-  fontSize?: number
-  borderRadius: string
-  height: string
-  paddingLeft: number
-  paddingRight: number
-  fontWeight: number
+  fontSize?: number;
+  borderRadius: string;
+  height: string;
+  paddingLeft: number;
+  paddingRight: number;
+  fontWeight: number;
 }
 
 type Sizes = {
@@ -45,23 +38,23 @@ const sizeProps: Sizes = {
     fontSize: 1,
     paddingLeft: 3,
     paddingRight: 3,
-    height: "1.75rem",
-    fontWeight: 1,
+    height: '1.75rem',
+    fontWeight: 1
   },
   normal: {
     borderRadius: '6px',
     height: '2rem',
     paddingLeft: 4,
     paddingRight: 4,
-    fontWeight: 2,
+    fontWeight: 2
   },
   large: {
     borderRadius: '8px',
     fontSize: 2,
     paddingLeft: 4,
     paddingRight: 4,
-    height: "2.5rem",
-    fontWeight: 1,
+    height: '2.5rem',
+    fontWeight: 1
   }
 }
 
@@ -72,7 +65,7 @@ const ButtonIcons: { [iconName in ButtonIconType]: any } = {
   play: FaPlay,
   home: TiHome,
   timer: TiStopwatch,
-  book: TiBook,
+  book: TiBook
 }
 
 const ButtonIcon: React.FC<{ icon: ButtonIconType }> = ({ icon }) => {
@@ -83,11 +76,11 @@ const ButtonIcon: React.FC<{ icon: ButtonIconType }> = ({ icon }) => {
 }
 
 interface Props {
-  bg: string
-  disabled: boolean
-  size: ButtonSize
-  plain?: boolean
-  icon?: ButtonIconType | false
+  bg: string;
+  disabled: boolean;
+  size: ButtonSize;
+  plain?: boolean;
+  icon?: ButtonIconType | false;
 }
 
 const ButtonFace = styled(Box)`
@@ -100,7 +93,7 @@ const plainProps = {
   bg: 'transparent',
   color: 'unset',
   height: 'unset',
-  padding: 0,
+  padding: 0
 }
 
 export const Button: React.FC<Props & any> = ({
@@ -115,14 +108,16 @@ export const Button: React.FC<Props & any> = ({
     ...baseProps,
     ...sizeProps[size],
     ...(plain === true ? plainProps : {}),
-    ...props,
+    ...props
   }
 
   if (disabled) {
-    faceProps.onClick = () => {}
+    faceProps.onClick = function () {
+      // do nothing
+    }
     faceProps.style = {
       cursor: 'not-allowed',
-      opacity: '0.5',
+      opacity: '0.5'
     }
   }
 

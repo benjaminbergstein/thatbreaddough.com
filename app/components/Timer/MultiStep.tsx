@@ -8,28 +8,28 @@ import {
   BreadTimer,
   EventType,
   RawEvent,
-  NullEvent,
+  NullEvent
 } from '../../storage/v2/types'
 
 import {
   filterForType,
-  humanizeType,
+  humanizeType
 } from '../../utils/timer'
 
 import Step from './Step'
 
 interface Props {
-  timer: BreadTimer
-  eventTypes: EventType[]
-  disabled: boolean
-  hiddenByEvent: RawEvent
-  startEvent: RawEvent
-  defaultPreviousEvent: RawEvent
-  defaultNextEvent: RawEvent
-  captureEvent: (type: EventType) => void
-  forceButtons?: boolean
-  limit?: number | null
-  showNothingRecordedMessage?: boolean
+  timer: BreadTimer;
+  eventTypes: EventType[];
+  disabled: boolean;
+  hiddenByEvent: RawEvent;
+  startEvent: RawEvent;
+  defaultPreviousEvent: RawEvent;
+  defaultNextEvent: RawEvent;
+  captureEvent: (type: EventType) => void;
+  forceButtons?: boolean;
+  limit?: number | null;
+  showNothingRecordedMessage?: boolean;
 }
 
 const MultiStep: React.FC<Props> = ({
@@ -43,7 +43,7 @@ const MultiStep: React.FC<Props> = ({
   captureEvent,
   forceButtons = false,
   limit = null,
-  showNothingRecordedMessage = false,
+  showNothingRecordedMessage = false
 }) => {
   const isMultiple = eventTypes.length > 1
   const events = !disabled ? filterForType(timer, eventTypes) : []
@@ -51,7 +51,7 @@ const MultiStep: React.FC<Props> = ({
 
   const hasHiddenByEventOccurred = hiddenByEvent.occurredAt !== null
   const limitReached = limit !== null && events.length === limit
-  const showAddEvent = !hasHiddenByEventOccurred  && !limitReached
+  const showAddEvent = !hasHiddenByEventOccurred && !limitReached
   const addEvent = isMultiple || forceButtons ? (
     <Box display="flex" flexWrap="wrap" flexDirection="row">
       {eventTypes.map((eventType) => (
@@ -71,7 +71,7 @@ const MultiStep: React.FC<Props> = ({
   ) : (
     <Step
       startEvent={startEvent}
-      targetEvent={{ type: eventTypes[0], occurredAt: null}}
+      targetEvent={{ type: eventTypes[0], occurredAt: null }}
       captureEvent={captureEvent}
       disabled={disabled}
     />

@@ -3,12 +3,11 @@ import {
   BreadTimer,
   RawEvent,
   EventInfo,
-  NullEvent,
+  NullEvent
 } from '../../storage/v2/types'
 
 export const formatElapsed: (number) => string = (elapsed) => {
   const pad: (number) => string = (num) => num.toString().padStart(2, '0')
-  const milli = elapsed % 1000
   const seconds = Math.floor(elapsed / 1000)
   const minutes = Math.floor(seconds / 60)
   const hours = Math.floor(minutes / 60)
@@ -26,7 +25,7 @@ export const getEventInfo: (
 ) => {
   const { type: eventType, occurredAt } = event
   const { occurredAt: startedAt } = startEvent
-  const { occurredAt: endedAt } = endEvent ? endEvent : { occurredAt: null }
+  const { occurredAt: endedAt } = endEvent || { occurredAt: null }
 
   const isDoneEvent = eventType === EventType.END
   const hasEnded = endedAt !== null || (occurredAt !== null && isDoneEvent)
@@ -42,7 +41,7 @@ export const getEventInfo: (
     isDoneEvent,
     hasEnded,
     wasStarted,
-    wasSkipped,
+    wasSkipped
   }
 }
 
@@ -97,6 +96,6 @@ export const addEvent: (
 
   return [
     ...baseTimer,
-    { type: eventType, occurredAt },
+    { type: eventType, occurredAt }
   ]
 }
