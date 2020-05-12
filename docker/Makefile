@@ -19,6 +19,9 @@ start:
 console:
 	${COMPOSE_CMD} exec ${SERVICE} /bin/bash
 
+lint:
+	${COMPOSE_CMD} run --rm ${SERVICE} lint
+
 logs:
 	${COMPOSE_CMD} logs -f ${SERVICE}
 

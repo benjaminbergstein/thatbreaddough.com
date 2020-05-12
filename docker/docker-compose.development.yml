@@ -8,6 +8,12 @@ services:
     volumes:
       - ./app:/app
       - node_modules:/app/node_modules
+    networks:
+      - development
+
+networks:
+  development:
+    external: true
 
 volumes:
   node_modules:
