@@ -1,0 +1,9 @@
+account_id = "${ACCOUNT_ID}"
+name = "${NAME}"
+type = "webpack"
+workers_dev = true
+site = { bucket = "./app/out" }
+
+[env.production]
+zone_id = "${ZONE_ID}"
+routes = ["http://www.thatbreaddough.com/*", "http://thatbreaddough.com/*", "https://www.thatbreaddough.com/*", "https://thatbreaddough.com/*"]

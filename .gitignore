@@ -1,3 +1,11 @@
 app/node_modules
 docker/log
 lint.txt
+server/data
+server/node_modules
+**/*.swp
+**/*.swo
+wrangler.toml
+secrets.mk
+node_modules
+dist

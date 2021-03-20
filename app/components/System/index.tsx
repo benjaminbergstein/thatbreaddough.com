@@ -72,19 +72,6 @@ export const Anchor = styled(Text)`
   cursor: pointer;
 `
 Anchor.defaultProps = { as: 'a', color: 'brand' }
-
-export const Box = styled.div({}, space, layout, position, flexbox, background, border, shadow, color)
-
-export const Card = styled(Box)``
-Card.defaultProps = {
-  p: 4,
-  borderRadius: '3px',
-  boxShadow: '0px 1px 2px 0px #bbb'
-}
-
-export const Main = Box
-
-export const Grid = Box
 export const Heading = styled(Text)`
   padding: 0;
   margin: 0;
@@ -108,4 +95,7 @@ const System: React.FC<{}> = ({ children }) => (
   </ThemeProvider>
 )
 
+export { default as Box, Card, Main, Grid } from './Box'
+export { default as Button } from './Button'
+export { default as Input } from './Input'
 export default System

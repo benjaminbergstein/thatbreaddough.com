@@ -1,4 +1,4 @@
-import { TiHome, TiStopwatch, TiBook } from 'react-icons/ti'
+import { TiHome, TiStopwatch, TiBook, TiCalculator } from 'react-icons/ti'
 import styled from 'styled-components'
 
 import {
@@ -42,6 +42,7 @@ const Layout: React.FC<Props> = ({ nav = true, children }) => (
       <Nav direction="row" background={nav ? 'light-1' : 'white'} pad={{ top: '10px', bottom: '8px', horizontal: '12px' }}>
         <NavLink href="/" Icon={TiHome} iconOnly label="Home" />
         <NavLink href="/sourdough-timer" Icon={TiStopwatch} label="Timer" />
+        <NavLink href="/sourdough-calculator" Icon={TiCalculator} label="Calculator" />
         <NavLink href="/glossary" Icon={TiBook} label="Glossary" />
       </Nav>
       {children}

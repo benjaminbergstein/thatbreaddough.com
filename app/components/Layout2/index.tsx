@@ -32,6 +32,7 @@ const Layout: React.FC<Props> = ({ nav = true, children }) => (
           <NavLink color="brand" plain as="a" href="/?ref=global_nav" icon='home' />
         </Box>
         <NavLink color="brand" plain as="a" href="/sourdough-timer?ref=global_nav" icon='timer'>Timer</NavLink >
+        <NavLink color="brand" plain as="a" href="/sourdough-calculator?ref=global_nav" icon='book'>Sourdough Calculator</NavLink >
         <NavLink color="brand" plain as="a" href="/glossary?ref=global_nav" icon='book'>Sourdough Glossary</NavLink >
       </Box>
       {children}

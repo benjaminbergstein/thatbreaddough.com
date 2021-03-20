@@ -6,11 +6,14 @@ import {
 } from 'styled-system'
 import { FaTrashAlt, FaPlus, FaPlay } from 'react-icons/fa'
 import { TiHome, TiStopwatch, TiBook } from 'react-icons/ti'
-import { Box } from '..'
+import Box from '../Box'
 
 type ButtonSize = 'small' | 'normal' | 'large'
 
 const baseProps = {
+  outline: "none",
+  borderWidth: 0,
+  borderRadius: "0",
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'center',
@@ -121,7 +124,7 @@ export const Button: React.FC<Props & any> = ({
     }
   }
 
-  return <ButtonFace {...faceProps} disabled={disabled}>
+  return <ButtonFace as="button" {...faceProps} disabled={disabled} {...props}>
     {icon && <ButtonIcon icon={icon} />}
     {children !== undefined && children}
   </ButtonFace>

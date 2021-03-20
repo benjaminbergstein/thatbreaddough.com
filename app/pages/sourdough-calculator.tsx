@@ -8,29 +8,28 @@ import { GiSlicedBread } from 'react-icons/gi'
 import { baseUrl } from '../utils/siteMetadata'
 import Analytics from '../components/Analytics'
 import Layout from '../components/Layout2'
-import Timer from '../components/Timer'
+import Calculator from '../components/Calculator'
 
-const TimerPage: React.FC<any> = () => {
-  const [firstEvent, setFirstEvent] = useState<number | null>(null)
+const CalculatorPage: React.FC<any> = () => {
   return <Layout>
-    <Analytics pageView="Timer" />
+    <Analytics pageView="Calculator" />
     <Head>
-      <title>Timer | Sourdough Bread Timer</title>
-      <link rel="canonical" href={`${baseUrl}/sourdough-timer`} />
+      <title>Calculator | Sourdough Bread Timer & Calculator</title>
+      <link rel="canonical" href={`${baseUrl}/calculator`} />
     </Head>
 
     <Box display="flex" flexDirection="row" justifyContent="center">
       <Box flexBasis="500px" flexGrow="0">
         <Box margin={4}>
-          <Heading>Sourdough Timer</Heading>
+          <Heading>Sourdough Calculator</Heading>
         </Box>
 
         <Box>
-          <Timer />
+          <Calculator />
         </Box>
       </Box>
     </Box>
   </Layout>
 }
 
-export default TimerPage
+export default CalculatorPage
