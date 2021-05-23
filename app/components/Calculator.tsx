@@ -5,6 +5,7 @@ import { Recipe } from '../utils/calculator/types'
 import { Recipes } from '../utils/calculator/data'
 import { recipeFromInput } from '../utils/calculator/recipeFromInput'
 import useStorage from '../hooks/useStorage'
+import Link from 'next/link'
 
 import {
   Grid,
@@ -28,6 +29,7 @@ Row.defaultProps = {
 
 const Calculator: FC<unknown> = () => {
   const [storage, setTimer, setRecipe] = useStorage()
+  const isRecipePersisted = !!storage.recipe
   const recipe = storage?.recipe || recipeFromInput(DefaultRecipe)
   const totalDoughWeightRef = useRef<HTMLInputElement>(null)
   const hydrationPercentRef = useRef<HTMLInputElement>(null)
@@ -120,6 +122,13 @@ const Calculator: FC<unknown> = () => {
         Total dough weight
         <Box>{recipe.totalDoughWeight}g</Box>
       </Row>
+      {isRecipePersisted && <Box px={3} display="flex" justifyItems="center" borderWidth="2px" borderLeftWidth="0px" borderRightWidth="0px" borderColor="#ccc" borderStyle="solid" py={5} my={5}>
+        <Link href="/sourdough-timer?ref=timer_cta">
+          <Button width="100%">
+            Go to timer
+          </Button>
+        </Link>
+      </Box>}
     </form>
   </>
 }

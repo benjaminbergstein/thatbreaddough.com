@@ -37,6 +37,7 @@ import SectionHeading from './SectionHeading'
 
 import { TickProvider } from '../../hooks/useClock'
 import useStorage from '../../hooks/useStorage'
+import Link from 'next/link'
 
 const {
   NULL,
@@ -70,6 +71,14 @@ const Timer: React.FC<{}> = () => {
   const [feedbackEvent, setFeedBackEvent] = useState<RawEvent>(nullEvent)
   const [storage, saveTimer] = useStorage()
   const [timer, updateTimer] = useState<BreadTimer>([])
+  const recipe = storage.recipe
+
+  const flour = recipe?.flour
+  const water = recipe?.water
+  const starter = recipe?.starter
+  const salt = recipe?.salt
+  const totalDoughWeight = recipe?.totalDoughWeight
+  const starterPart = starter && Math.ceil(starter / 3.0 + 3.33)
 
   useLayoutEffect(() => { updateTimer(storage.timer) }, [storage.timer])
 
@@ -110,6 +119,13 @@ const Timer: React.FC<{}> = () => {
   return (
     <TickProvider>
       <Box margin={5}>
+        {!recipe && <Box>
+          <Link href="/sourdough-calculator?ref=timer_cta">
+            <Button>
+              Add recipe
+            </Button>
+          </Link>
+        </Box>}
         <SectionHeading label="Feeds" firstEvent={firstEvent(timer, FEED)} />
         <MultiStep
           timer={timer}
@@ -126,12 +142,26 @@ const Timer: React.FC<{}> = () => {
 
         <SectionHeading label="Pre-ferment" firstEvent={firstEvent(timer, LEVAIN)} />
 
+        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+          <Text color="darks.2" fontWeight={4} lineHeight="24px">Levain build</Text>
+          <Text color="darks.3" lineHeight="24px">{starterPart}g flour</Text>
+          <Text color="darks.3" lineHeight="24px">{starterPart}g water</Text>
+          <Text color="darks.3" lineHeight="24px">{starterPart}g starter</Text>
+        </Box>
+
         <Step
           startEvent={startEvent}
           endEvent={firstEvent(timer, MIX)}
           targetEvent={firstEvent(timer, LEVAIN)}
           captureEvent={captureEvent}
         />
+
+
+        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+          <Text color="darks.2" fontWeight={4} lineHeight="24px">Preferment</Text>
+          <Text color="darks.3" lineHeight="24px">{flour}g flour</Text>
+          <Text color="darks.3" lineHeight="24px">{water}g water</Text>
+        </Box>
 
         <MultiStep
           timer={timer}
@@ -147,6 +177,11 @@ const Timer: React.FC<{}> = () => {
         />
 
         <SectionHeading label="Mixing" firstEvent={firstEvent(timer, MIX)} />
+
+        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+          <Text color="darks.2" fontWeight={4} lineHeight="24px">Add levain</Text>
+          <Text color="darks.3" lineHeight="24px">{starter}g levain</Text>
+        </Box>
 
         <Step
           startEvent={startEvent}
