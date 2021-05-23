@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
-import { Heading, Main, Box, Text, Anchor } from '../components/System'
+import { Heading, Main, Box, Text, Anchor, Spinner } from '../components/System'
 import Button from '../components/System/Button'
 import { FaPlay } from 'react-icons/fa'
 import { GiSlicedBread } from 'react-icons/gi'
@@ -9,6 +9,8 @@ import { baseUrl } from '../utils/siteMetadata'
 import Analytics from '../components/Analytics'
 import Layout from '../components/Layout2'
 import Timer from '../components/Timer'
+
+const isServer = typeof window === "undefined"
 
 const TimerPage: React.FC<any> = () => {
   const [firstEvent, setFirstEvent] = useState<number | null>(null)
@@ -26,7 +28,8 @@ const TimerPage: React.FC<any> = () => {
         </Box>
 
         <Box>
-          <Timer />
+          {!isServer && <Timer />}
+          {isServer && <Spinner/>}
         </Box>
       </Box>
     </Box>

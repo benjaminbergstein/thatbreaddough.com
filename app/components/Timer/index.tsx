@@ -121,7 +121,7 @@ const Timer: React.FC<{}> = () => {
   const firstFold = filterForType(timer, FoldTypes)[0] || { occurredAt: null, type: NULL }
 
   return (
-    <TickProvider key="client">
+    <TickProvider>
       <Box margin={5}>
         {!isServer && !recipe && <Box key="go-to-timer">
           <Link href="/sourdough-calculator?ref=timer_cta">
