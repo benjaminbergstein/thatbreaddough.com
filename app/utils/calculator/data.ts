@@ -2,10 +2,10 @@ import { RecipePercentInput } from './types';
 
 export const Recipes: { [index:string] : RecipePercentInput } = {
   sourdoughLoaf: {
-    totalDoughWeight: 1970,
-    hydrationPercent: 77,
-    starterPercent: 10,
-    saltPercent: 100,
+    totalDoughWeight: 950,
+    hydrationPercent: 78,
+    starterPercent: 15,
+    saltPercent: 180,
     scale: 100,
     yield: 'One dough ball',
   },
