@@ -5,8 +5,9 @@ import {
   typography
 } from 'styled-system'
 import { FaTrashAlt, FaPlus, FaPlay } from 'react-icons/fa'
-import { TiHome, TiStopwatch, TiBook } from 'react-icons/ti'
+import { TiHome, TiCalculator, TiStopwatch, TiBook } from 'react-icons/ti'
 import Box from '../Box'
+import Text from '../Text'
 
 type ButtonSize = 'small' | 'normal' | 'large'
 
@@ -61,14 +62,15 @@ const sizeProps: Sizes = {
   }
 }
 
-type ButtonIconType = 'trash' | 'add' | 'play' | 'home' | 'timer' | 'book'
-const ButtonIcons: { [iconName in ButtonIconType]: any } = {
+type ButtonIconType = 'trash' | 'add' | 'play' | 'home' | 'timer' | 'book' | 'calculator'
+const ButtonIcons: Record<ButtonIconType, React.ComponentType> = {
   trash: FaTrashAlt,
   add: FaPlus,
   play: FaPlay,
   home: TiHome,
   timer: TiStopwatch,
-  book: TiBook
+  book: TiBook,
+  calculator: TiCalculator,
 }
 
 const ButtonIcon: React.FC<{ icon: ButtonIconType }> = ({ icon }) => {
@@ -86,7 +88,7 @@ interface Props {
   icon?: ButtonIconType | false;
 }
 
-const ButtonFace = styled(Box)`
+const ButtonFace = styled(Text)`
   ${color}
   ${typography}
   cursor: pointer;

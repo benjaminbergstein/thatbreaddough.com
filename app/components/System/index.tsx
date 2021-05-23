@@ -1,5 +1,6 @@
 import React from 'react'
-import styled, { ThemeProvider, keyframes } from 'styled-components'
+import styled, { createGlobalStyle, ThemeProvider, keyframes } from 'styled-components'
+
 import {
   background,
   position,
@@ -12,6 +13,8 @@ import {
   typography
 } from 'styled-system'
 import { FaSpinner } from 'react-icons/fa'
+import Box from './Box'
+import Text from './Text'
 
 const darks = [
   '#000',
@@ -19,7 +22,8 @@ const darks = [
   '#333',
   '#505050',
   '#666',
-  '#777'
+  '#777',
+  '#999',
 ]
 const lights = [
   '#aaa',
@@ -32,6 +36,7 @@ const lights = [
 export const theme = {
   colors: {
     brand: '#937674',
+    brand2: '#00739d',
     heading1: '#455278',
     accent1: '#ade1ca',
     lights,
@@ -46,8 +51,6 @@ export const theme = {
   fontWeights: [100, 300, 500, 700, 900],
   space: [3, 5, 8, 10, 12, 15, 20, 30, 40, 50, 80, 100, 150, 200]
 }
-
-export const Text = styled.span({}, color, typography)
 
 const spinnerKeyframes = keyframes`
   from {
@@ -84,18 +87,31 @@ Heading.defaultProps = {
   color: 'heading1'
 }
 
-const BaseStyles = styled.div`
-  font-family: "Helvetica Neue", sans-serif;
-  font-size: 16px;
+const BaseStyles = createGlobalStyle`
+  body {
+    font-family: "Helvetica Neue", sans-serif;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  button {
+    font-family: "Helvetica Neue", sans-serif;
+    text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
 `
 
 const System: React.FC<{}> = ({ children }) => (
   <ThemeProvider theme={theme}>
-    <BaseStyles>{children}</BaseStyles>
+    <BaseStyles/>
+    {children}
   </ThemeProvider>
 )
 
 export { default as Box, Card, Main, Grid } from './Box'
 export { default as Button } from './Button'
+export { default as Text } from './Text'
 export { default as Input } from './Input'
 export default System

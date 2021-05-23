@@ -12,7 +12,7 @@ NavLink.defaultProps = {
   plain: true,
   as: 'a',
   fontWeight: 1,
-  fontSize: 1,
+  fontSize: [3, 3, 1],
   marginRight: 2
 }
 
@@ -31,9 +31,15 @@ const Layout: React.FC<Props> = ({ nav = true, children }) => (
         <Box display="flex" flex="1" justifyContent="start">
           <NavLink color="brand" plain as="a" href="/?ref=global_nav" icon='home' />
         </Box>
-        <NavLink color="brand" plain as="a" href="/sourdough-timer?ref=global_nav" icon='timer'>Timer</NavLink >
-        <NavLink color="brand" plain as="a" href="/sourdough-calculator?ref=global_nav" icon='book'>Sourdough Calculator</NavLink >
-        <NavLink color="brand" plain as="a" href="/glossary?ref=global_nav" icon='book'>Sourdough Glossary</NavLink >
+        <NavLink color="brand" plain as="a" href="/sourdough-timer?ref=global_nav" icon='timer'>
+          <Box display={["none", "none", "block"]}>Timer</Box>
+        </NavLink >
+        <NavLink color="brand" plain as="a" href="/sourdough-calculator?ref=global_nav" icon='calculator'>
+          <Box display={["none", "none", "block"]}>Sourdough Calculator</Box>
+        </NavLink >
+        <NavLink color="brand" plain as="a" href="/glossary?ref=global_nav" icon='book'>
+          <Box display={["none", "none", "block"]}>Sourdough Glossary</Box>
+        </NavLink >
       </Box>
       {children}
       <Footer>&copy; 2020 <Anchor href="http://benjaminbergstein.com?ref=bread_timer">Ben Bergstein</Anchor></Footer>

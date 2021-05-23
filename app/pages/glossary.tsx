@@ -6,10 +6,10 @@ import { FaPlay, FaTimes } from 'react-icons/fa'
 import { GiSlicedBread } from 'react-icons/gi'
 import styled from 'styled-components'
 
-import Layout from '../../components/Layout'
-import Timer from '../../components/Timer'
-import Analytics from '../../components/Analytics'
-import { terms } from '../../utils/glossary'
+import Layout from '../components/Layout'
+import Timer from '../components/Timer'
+import Analytics from '../components/Analytics'
+import { terms } from '../utils/glossary'
 
 const GlossaryPage: React.FC<any> = () => {
   const [firstEvent, setFirstEvent] = useState<number | null>(null)

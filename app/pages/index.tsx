@@ -3,38 +3,28 @@ import Head from 'next/head'
 
 import styled from 'styled-components'
 import Link from 'next/link'
-import {
-  Heading,
-  Box,
-  Main,
-  Button,
-  Text,
-  Grid
-} from 'grommet'
+import { Button, Heading, Main, Box, Text, Anchor } from '../components/System'
 import { FaChevronRight } from 'react-icons/fa'
 import { GiSlicedBread } from 'react-icons/gi'
 import { IoIosArrowRoundDown } from 'react-icons/io'
 
-import Layout from '../components/Layout'
+import Layout from '../components/Layout2'
 import InfoSection from '../components/InfoSection'
 import Analytics from '../components/Analytics'
 import Sections from '../utils/infoSections'
 
 const Cta: React.FC<{ text?: string }> = ({ text = 'Try the Timer' }) => (
-  <Box align="center" fill margin={{ vertical: 'medium' }}>
+  <Box display="flex" justifyContent="center" alignItems="center" my="24px">
     <Text>
       <Link href="/sourdough-timer?ref=home_cta">
-        <Button
-          primary
-          color='brand'
-          a11yTitle={text}
-          label={<Text>
+        <Button a11yTitle={text} borderRadius="18px" height="37px" px="24px">
+          <Text fontSize="18px" fontWeight={4}>
             {text}
             <IconPositioning>
               <FaChevronRight />
             </IconPositioning>
-          </Text>}
-        />
+          </Text>
+        </Button>
       </Link>
     </Text>
   </Box>
@@ -53,58 +43,64 @@ const IndexPage: React.FC<any> = () => {
       <Head>
         <title>That Bread Dough | Sourdough Bread Timer</title>
       </Head>
-      <Box align="center">
-        <Wrapper fill="vertical" flex="grow">
-          <Container fill align="center" flex="grow">
+      <Box display="flex" alignItems="center" justifyContent="center" flexDirection="column">
+        <Box maxWidth="1000px" margin="0 auto">
+          <Box display="flex" alignItems="center" justifyContent="center">
             <Box
-              width={{ max: '500px' }}
-              align="center"
-              style={{ zIndex: 2 }}
-              pad={{ horizontal: 'large', top: 'xlarge', bottom: 'small' }}
+              display="flex"
+              flexDirection="column"
+              maxWidth="400px"
+              alignItems="center"
+              justifyContent="center"
+              zIndex={2}
+              pt="96px"
+              px="48px"
+              pb="12px"
             >
-              <Text as="h2" size="large" weight="bold" color="dark-5" margin={{ vertical: '0px' }}>
+              <Text fontSize="22px" fontWeight={3} color="darks.6" my="0px">
                 That Bread Dough
               </Text>
 
-              <Text as="h1" size="30px" weight="bold" color="dark-1" margin={{ top: 'medium', bottom: 'small' }}>
+              <Text fontSize="30px" fontWeight="600" color="darks.2" mt="24px" mb="12px">
                 Sourdough Timer
               </Text>
 
-              <Heading level={4} color="dark-2" textAlign="center">
+              <Text lineHeight="24px" fontSize="18px" color="darks.4" textAlign="center" fontWeight="600" my="24px">
                 An interval timer for working out your sourdough muscles.
                 Easily track the time between mix, folds, proof,  bake, and more.
-              </Heading>
+              </Text>
 
               <Cta />
             </Box>
-          </Container>
-        </Wrapper>
+          </Box>
+        </Box>
 
         <InfoHeadline
+          width="100%"
           onClick={scrollToInfoSections}
           fill
           align="center"
           justify="center"
-          margin={{ top: 'xlarge' }}
-          pad={{
-            top: 'xlarge',
-            bottom: 'medium'
-          }}
+          mt="50px"
+          pt="50px"
+          pb="30px"
         >
-          <Box width={{ max: '50%' }}>
+          <Box display="flex" alignItems="center" justifyContent="center" maxWidth="50%" mx="auto" flexDirection="column">
             <Text
-              margin={{ top: 'small' }}
-              color='neutral-3'
+              color="brand2"
               as="h2"
-              size="xlarge"
+              fontSize="26px"
+              fontWeight={3}
+              my="21px"
             >
               How does the timer help?
             </Text>
             <Text
-              margin={{ top: 'small' }}
-              color='dark-3'
+              color="brand"
               as="h2"
-              size="xlarge"
+              fontSize="26px"
+              fontWeight={3}
+              my="21px"
             >
               <IoIosArrowRoundDown />
             </Text>
@@ -114,7 +110,7 @@ const IndexPage: React.FC<any> = () => {
         <a ref={infoSectionRef} />
         {Sections.map((props, i) => (
           <>
-            {i !== 0 && i !== 2 && <Text color='brand' size='large' margin={{ top: 'small', bottom: 'medium' }} style={{ opacity: '0.95' }}>
+            {i !== 0 && i !== 2 && <Text color="brand" fontSize={5} mt="12px" mb="24px" style={{ opacity: '0.95' }}>
               <GiSlicedBread />
             </Text>}
             {i === 2 && <Cta text="Record a Bake"/>}
@@ -132,20 +128,6 @@ const IndexPage: React.FC<any> = () => {
 const InfoHeadline = styled(Box)`
   text-align: center;
   box-shadow: inset 0px 14px 30px -21px #ddd;
-`
-
-const Wrapper = styled(Box)`
-  max-width: 1000px;
-  margin: 0 auto;
-`
-
-const Container = styled(Box)`
-`
-
-const Hero = styled.div`
-  background: rgba(255, 255, 255, 0.9);
-  zIndex: 2;
-  boxShadow: white -40px 0px 24px 14px;
 `
 
 const IconPositioning = styled.span`

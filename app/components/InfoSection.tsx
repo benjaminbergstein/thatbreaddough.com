@@ -1,10 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import {
-  Box,
-  Text,
-  Grid
-} from 'grommet'
+import { Box, Text } from '../components/System'
 
 import useDevice from '../hooks/useDevice'
 
@@ -16,7 +12,6 @@ interface ScreenshotProps {
 const DesktopScreenshot = styled(Box)`
   width: 100%;
   height: 190px;
-  margin-top: ${(props: ScreenshotProps) => props.first ? '30px' : '20px'};
   margin-bottom: 0px;
   background: url(screenshot.png);
   background-size: contain;
@@ -75,26 +70,27 @@ const InfoSection: React.FC<Props> = ({
   const Screenshot = device === 'mobile' ? MobileScreenshot : DesktopScreenshot
   return (
     <Box
-      width={{ max: '940px' }}
-      margin={{ top: first ? 'medium' : 'xlarge', bottom: 'medium' }}
-      fill
-      flex="grow"
+      maxWidth="940px"
+      mt={first ? "24px" : "48px"}
+      mb="24px"
     >
-      <Grid fill columns={columns} rows={rows}>
-        <Box>
+      <Box display="flex" flexDirection={["column", "column", "row"]}>
+        <Box flex="1">
           <Screenshot
             first={first}
             backgroundPosition={backgroundPosition}
           />
         </Box>
         <Box
-          pad={{ horizontal: 'medium', top: device === 'mobile' ? 'large' : '0' }}
-          margin={{ horizontal: device === 'mobile' ? 'large' : '0' }}
+          flex="1"
+          px="12px"
+          pt={["24px", "24px", "24px"]}
+          mx={["24px", "24px", 0]}
         >
-          <Text color='dark-1' as="h2">{headline}</Text>
-          <Text color='dark-2' as="p">{body}</Text>
+          <Box py={5}><Text lineHeight="24px" fontSize={3} fontWeight={3} color="darks.2">{headline}</Text></Box>
+          <Box py={6}><Text lineHeight="24px" fontSize={3} color="darks.3">{body}</Text></Box>
         </Box>
-      </Grid>
+      </Box>
     </Box>
   )
 }

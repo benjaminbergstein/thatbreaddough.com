@@ -107,7 +107,7 @@ const Calculator: FC<unknown> = () => {
         <Box>{recipe.salt}g</Box>
       </Row>
       <Row>
-        TotalDoughWeight
+        Total dough weight
         <Box>{recipe.totalDoughWeight}g</Box>
       </Row>
     </form>
