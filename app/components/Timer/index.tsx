@@ -130,22 +130,6 @@ const Timer: React.FC<{}> = () => {
             </Button>
           </Link>
         </Box>}
-        <SectionHeading label="Feeds" firstEvent={firstEvent(timer, FEED)} />
-        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
-          <Text color="darks.3" lineHeight="24px">Unless you have recently baked, a few feeds over the preceding days will help prepare your starter. Try gradually increasing ratio of starter to water to flour (e.g 1:1:1, 1:2:2, 1:3:3, 1:5:5).</Text>
-        </Box>
-        <MultiStep
-          timer={timer}
-          eventTypes={[FEED]}
-          disabled={false}
-          startEvent={startEvent}
-          captureEvent={captureEvent}
-          hiddenByEvent={firstEvent(timer, LEVAIN)}
-          defaultPreviousEvent={startEvent}
-          defaultNextEvent={firstEvent(timer, LEVAIN)}
-          forceButtons={true}
-          showNothingRecordedMessage={true}
-        />
 
         <SectionHeading label="Pre-ferment" firstEvent={firstEvent(timer, LEVAIN)} />
 
