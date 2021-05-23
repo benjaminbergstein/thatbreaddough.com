@@ -78,9 +78,6 @@ const IndexPage: React.FC<any> = () => {
         <InfoHeadline
           width="100%"
           onClick={scrollToInfoSections}
-          fill
-          align="center"
-          justify="center"
           mt="50px"
           pt="50px"
           pb="30px"

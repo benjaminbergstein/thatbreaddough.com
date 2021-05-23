@@ -133,12 +133,12 @@ const Timer: React.FC<{}> = () => {
 
         <SectionHeading label="Pre-ferment" firstEvent={firstEvent(timer, LEVAIN)} />
 
-        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+        {recipe && <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
           <Text color="darks.2" fontWeight={4} lineHeight="24px">Levain build</Text>
           <Text color="darks.3" lineHeight="24px">{starterPart}g flour</Text>
           <Text color="darks.3" lineHeight="24px">{starterPart}g water</Text>
           <Text color="darks.3" lineHeight="24px">{starterPart}g starter</Text>
-        </Box>
+        </Box>}
 
         <Step
           startEvent={startEvent}
@@ -148,12 +148,12 @@ const Timer: React.FC<{}> = () => {
         />
 
 
-        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+        {recipe && <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
           <Text color="darks.2" fontWeight={4} lineHeight="24px">Preferment</Text>
           <Text color="darks.3" lineHeight="24px">{water}g water</Text>
           <Text color="darks.3" lineHeight="24px">({salt}g salt)</Text>
           <Text color="darks.3" lineHeight="24px">{flour}g flour</Text>
-        </Box>
+        </Box>}
 
         <MultiStep
           timer={timer}
@@ -170,10 +170,10 @@ const Timer: React.FC<{}> = () => {
 
         <SectionHeading label="Mixing" firstEvent={firstEvent(timer, MIX)} />
 
-        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+        {recipe && <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
           <Text color="darks.2" fontWeight={4} lineHeight="24px">Add levain</Text>
           <Text color="darks.3" lineHeight="24px">{starter}g levain</Text>
-        </Box>
+        </Box>}
 
         <Step
           startEvent={startEvent}
@@ -183,11 +183,11 @@ const Timer: React.FC<{}> = () => {
           disabled={!hasEvent(timer, LEVAIN)}
         />
 
-        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+        {recipe && <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
           <Text color="darks.2" fontWeight={4} lineHeight="24px">Salt</Text>
           <Text color="darks.3" lineHeight="24px">{salt}g salt</Text>
           <Text color="darks.3" lineHeight="24px">(unless added during preferment)</Text>
-        </Box>
+        </Box>}
 
         <MultiStep
           timer={timer}
