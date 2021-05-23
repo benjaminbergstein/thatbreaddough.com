@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Recipe } from '../utils/calculator/types'
 import { Recipes } from '../utils/calculator/data'
 import { recipeFromInput } from '../utils/calculator/recipeFromInput'
+import useStorage from '../hooks/useStorage'
 
 import {
   Grid,
@@ -25,7 +26,8 @@ Row.defaultProps = {
 }
 
 const Calculator: FC<unknown> = () => {
-  const [recipe, setRecipe] = useState<Recipe>(recipeFromInput(DefaultRecipe))
+  const [storage, setTimer, setRecipe] = useStorage()
+  const recipe = storage?.recipe || recipeFromInput(DefaultRecipe)
   const totalDoughWeightRef = useRef<HTMLInputElement>(null)
   const hydrationPercentRef = useRef<HTMLInputElement>(null)
   const starterPercentRef = useRef<HTMLInputElement>(null)

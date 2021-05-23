@@ -68,10 +68,8 @@ const last: (arr: any[]) => any = (arr) => arr.slice(-1)[0]
 
 const Timer: React.FC<{}> = () => {
   const [feedbackEvent, setFeedBackEvent] = useState<RawEvent>(nullEvent)
-  const [storage, saveTimer, storageVersion, needsMigration] = useStorage()
+  const [storage, saveTimer] = useStorage()
   const [timer, updateTimer] = useState<BreadTimer>([])
-
-  if (needsMigration) return null
 
   useLayoutEffect(() => { updateTimer(storage.timer) }, [storage.timer])
 

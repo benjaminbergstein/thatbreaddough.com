@@ -30,7 +30,7 @@ export enum EventType {
   END = 'done',
 }
 
-export interface RawEvent {
+export type RawEvent = {
   type: EventType;
   occurredAt: number;
 }

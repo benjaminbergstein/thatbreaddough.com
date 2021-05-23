@@ -2,34 +2,38 @@ import { useEffect } from 'react'
 import createPersistedState from 'use-persisted-state'
 
 import { StorageVersion } from '../storage/types'
-import { BreadTimer, Storage } from '../storage/v2/types'
+import { BreadTimer, Storage, Recipe } from '../storage/v3/types'
 import runMigrations from '../storage/migrate'
 
 type TimerUpdater = (timer: BreadTimer) => void
 type UseStorageHookReturn = [Storage, TimerUpdater | null, StorageVersion, boolean]
 
-const CurrentVersion: StorageVersion = 'v2'
+const CurrentVersion: StorageVersion = 'v3'
 const useTimerState = createPersistedState('bread-timer')
+const NewTimer: Storage = { version: CurrentVersion, timer: [] }
 
 const useStorage = () => {
-  const [storage, setStorage] = useTimerState<Storage>({ version: 'v2', timer: [] })
-  const needsMigration = storage.version !== CurrentVersion
+  const [_storage, setStorage] = useTimerState<Storage>(NewTimer)
+  const needsMigration = _storage.version !== CurrentVersion
 
-  useEffect(() => {
-    if (!needsMigration) return
-    setStorage(runMigrations(storage))
-  })
+  const storage = needsMigration ? runMigrations(_storage) : _storage
+  console.log(storage)
 
-  if (needsMigration) return [null, storage, CurrentVersion, true]
-
-  const setTimer: (timer: BreadTimer) => void = (timer: BreadTimer) => {
+  const setTimer = (timer: BreadTimer): void => {
     setStorage({
       ...storage,
-      timer
+      timer,
     })
   }
 
-  return [storage, setTimer, CurrentVersion, false]
+  const setRecipe =  (recipe: Recipe): void => {
+    setStorage({
+      ...storage,
+      recipe,
+    })
+  }
+
+  return [storage, setTimer, setRecipe]
 }
 
 export default useStorage
