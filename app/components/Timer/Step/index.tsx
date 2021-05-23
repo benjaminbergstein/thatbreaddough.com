@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Card, Text } from '../../System'
+import { Box, Card, Text } from '../../System'
 
 import {
   formatElapsed,
@@ -53,9 +53,12 @@ const Step: React.FC<Props> = ({
   }, [startEvent.occurredAt, disabledSetting])
 
   const header = <Text fontWeight="bold" color="heading1">
-    <span style={{ whiteSpace: 'nowrap', textDecoration: wasSkipped ? 'line-through' : 'none' }}>
-      {humanizeType(eventType, i)}
-    </span>
+      <Box display="flex" alignItems="center">
+        {i !== null && <Box mr={2} borderRadius="50%" display="flex" alignItems="center" justifyContent="center" width="22px" height="22px" bg="brand" color="white">{i}</Box>}
+        <span style={{ textDecoration: wasSkipped ? 'line-through' : 'none' }}>
+          {humanizeType(eventType)}
+        </span>
+      </Box>
   </Text>
 
   return <Card

@@ -40,7 +40,7 @@ const SectionHeading: React.FC<{
         <Heading fontSize={2}>{label}</Heading>
       </Box>
       {firstEvent && firstEvent.occurredAt && (
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box key="first-event" display="flex" justifyContent="center" alignItems="center">
           <Text color="lights.5" fontSize={0} style={{ textTransform: 'uppercase' }}>
             {formatDate(firstEvent.occurredAt)}
           </Text>

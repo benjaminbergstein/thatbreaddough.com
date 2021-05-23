@@ -51,7 +51,7 @@ export const humanizeType: (
 ) => string = (eventType, i = null) => {
   const humanized = `${eventType[0].toUpperCase()}${eventType.substr(1)}`.replace(/-/g, ' ')
   const num = `${i !== null ? ` ${i}` : ''}`
-  return `${humanized} ${num}`
+  return `${humanized}${num}`
 }
 
 export const firstEvent: (

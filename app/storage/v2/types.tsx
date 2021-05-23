@@ -30,6 +30,16 @@ export enum EventType {
   END = 'done',
 }
 
+type EventGroup = 'strengthening'
+export const EventGroups: Partial<Record<EventType,EventGroup>> = {
+  [EventType.STRETCH_FOLD]: 'strengthening',
+  [EventType.SLAP_FOLD]: 'strengthening',
+  [EventType.COIL_FOLD]: 'strengthening',
+  [EventType.LAMINATE]: 'strengthening',
+  [EventType.FOLD]: 'strengthening',
+  [EventType.RUBAUD]: 'strengthening',
+}
+
 export type RawEvent = {
   type: EventType;
   occurredAt: number;

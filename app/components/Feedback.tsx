@@ -21,6 +21,7 @@ const Feedback: React.FC<Props> = ({ countEvents, start }) => {
       const elapsed = +new Date() - start
 
       if (elapsed > (30000 * Math.pow(countEvents - 1, 3))) {
+        console.log('showing')
         setShow(true)
         setWasShown(true)
         ReactGa.event({

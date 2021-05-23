@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from 'react'
+import React, { useState, useLayoutEffect as _useLayoutEffect, useEffect } from 'react'
 import ReactGa from 'react-ga'
 import styled from 'styled-components'
 
@@ -7,7 +7,8 @@ import {
   Text,
   Heading,
   Box,
-  Main
+  Main,
+  Spinner,
 } from '../System'
 
 import Button from '../System/Button'
@@ -63,9 +64,12 @@ const {
   END
 } = EventType
 
+const isServer = typeof window === "undefined"
 const FoldTypes = [COIL_FOLD, STRETCH_FOLD, SLAP_FOLD, FOLD, LAMINATE, REST, RUBAUD]
 
 const last: (arr: any[]) => any = (arr) => arr.slice(-1)[0]
+
+const useLayoutEffect = isServer ? useEffect : _useLayoutEffect
 
 const Timer: React.FC<{}> = () => {
   const [feedbackEvent, setFeedBackEvent] = useState<RawEvent>(nullEvent)
@@ -117,9 +121,9 @@ const Timer: React.FC<{}> = () => {
   const firstFold = filterForType(timer, FoldTypes)[0] || { occurredAt: null, type: NULL }
 
   return (
-    <TickProvider>
+    <TickProvider key="client">
       <Box margin={5}>
-        {!recipe && <Box>
+        {!isServer && !recipe && <Box key="go-to-timer">
           <Link href="/sourdough-calculator?ref=timer_cta">
             <Button>
               Add recipe
@@ -127,6 +131,9 @@ const Timer: React.FC<{}> = () => {
           </Link>
         </Box>}
         <SectionHeading label="Feeds" firstEvent={firstEvent(timer, FEED)} />
+        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+          <Text color="darks.3" lineHeight="24px">Unless you have recently baked, a few feeds over the preceding days will help prepare your starter. Try gradually increasing ratio of starter to water to flour (e.g 1:1:1, 1:2:2, 1:3:3, 1:5:5).</Text>
+        </Box>
         <MultiStep
           timer={timer}
           eventTypes={[FEED]}
@@ -159,8 +166,9 @@ const Timer: React.FC<{}> = () => {
 
         <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
           <Text color="darks.2" fontWeight={4} lineHeight="24px">Preferment</Text>
-          <Text color="darks.3" lineHeight="24px">{flour}g flour</Text>
           <Text color="darks.3" lineHeight="24px">{water}g water</Text>
+          <Text color="darks.3" lineHeight="24px">({salt}g salt)</Text>
+          <Text color="darks.3" lineHeight="24px">{flour}g flour</Text>
         </Box>
 
         <MultiStep
@@ -190,6 +198,12 @@ const Timer: React.FC<{}> = () => {
           captureEvent={captureEvent}
           disabled={!hasEvent(timer, LEVAIN)}
         />
+
+        <Box my={3} display="flex" flexDirection="column" borderWidth="1px" borderStyle="solid" borderColor="brand" py={1} px={2} borderRadius="8px">
+          <Text color="darks.2" fontWeight={4} lineHeight="24px">Salt</Text>
+          <Text color="darks.3" lineHeight="24px">{salt}g salt</Text>
+          <Text color="darks.3" lineHeight="24px">(unless added during preferment)</Text>
+        </Box>
 
         <MultiStep
           timer={timer}

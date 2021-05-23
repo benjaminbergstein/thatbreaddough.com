@@ -8,7 +8,8 @@ import {
   BreadTimer,
   EventType,
   RawEvent,
-  NullEvent
+  NullEvent,
+  EventGroups,
 } from '../../storage/v2/types'
 
 import {
@@ -79,9 +80,10 @@ const MultiStep: React.FC<Props> = ({
 
   const counts: { [eventType: string]: number } = {}
   const getCount: (eventType: EventType) => number = (eventType) => {
-    if (!counts[eventType]) counts[eventType] = 0
-    counts[eventType] = counts[eventType] + 1
-    return counts[eventType]
+    const group = EventGroups[eventType] || eventType
+    if (!counts[group]) counts[group] = 0
+    counts[group] = counts[group] + 1
+    return counts[group]
   }
 
   return <>
