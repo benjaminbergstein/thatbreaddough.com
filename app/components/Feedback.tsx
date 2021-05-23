@@ -10,6 +10,8 @@ interface Props {
   start: number;
 }
 
+const Interval = 60000
+
 const Feedback: React.FC<Props> = ({ countEvents, start }) => {
   const [show, setShow] = useState<boolean>(false)
   const [wasShown, setWasShown] = useState<boolean>(false)
@@ -20,8 +22,7 @@ const Feedback: React.FC<Props> = ({ countEvents, start }) => {
     const interval = setInterval(() => {
       const elapsed = +new Date() - start
 
-      if (elapsed > (30000 * Math.pow(countEvents - 1, 3))) {
-        console.log('showing')
+      if (elapsed > (Interval * (countEvents - 1))) {
         setShow(true)
         setWasShown(true)
         ReactGa.event({
@@ -29,11 +30,11 @@ const Feedback: React.FC<Props> = ({ countEvents, start }) => {
           action: 'Shown'
         })
       }
-    })
+    }, 1000)
 
     const cleanup: () => void = () => { clearInterval(interval) }
     return cleanup
-  })
+  }, [countEvents])
 
   const hideModal: (dismissed?: boolean) => void = (dismissed = true) => {
     setShow(false)
@@ -61,15 +62,15 @@ const Feedback: React.FC<Props> = ({ countEvents, start }) => {
       justifyContent="space-between"
       alignItems="center"
     >
-      <Box marginTop={8}><Heading>Hey there!</Heading></Box>
-      <p>Enjoying the timer or having issues?</p>
-      <Box marginBottom={8}>
-        <Button target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6">Give Feedback!</Button>
+      <Box pt={8}><Heading>Hey there!</Heading></Box>
+      <Box py={5}><p>Enjoying the timer or having issues?</p></Box>
+      <Box pb={8}>
+        <Button mt={4} target="_blank" onClick={feedbackClicked} href="https://forms.gle/3G1KLi79BMtCXyuY6">Give Feedback!</Button>
         <Button
-          marginTop={2}
+          mt={4}
           fontWeight={1}
-          fontSize={0}
-          color='darks.4'
+          fontSize={1}
+          color="darks.4"
           plain
           onClick={hideModal}
           style={{ textDecoration: 'underline' }}
