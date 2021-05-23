@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import createPersistedState from 'use-persisted-state'
 
 import { StorageVersion } from '../storage/types'
-import { BreadTimer, Storage, Recipe } from '../storage/v3/types'
+import { BreadTimer, Storage, Recipe, RecipePercentInput } from '../storage/v3/types'
 import runMigrations from '../storage/migrate'
 
 type TimerUpdater = (timer: BreadTimer) => void
@@ -17,7 +17,6 @@ const useStorage = () => {
   const needsMigration = _storage.version !== CurrentVersion
 
   const storage = needsMigration ? runMigrations(_storage) : _storage
-  console.log(storage)
 
   const setTimer = (timer: BreadTimer): void => {
     setStorage({
@@ -26,10 +25,11 @@ const useStorage = () => {
     })
   }
 
-  const setRecipe =  (recipe: Recipe): void => {
+  const setRecipe =  (recipe: Recipe, recipeInput: RecipePercentInput): void => {
     setStorage({
       ...storage,
       recipe,
+      recipeInput,
     })
   }
 

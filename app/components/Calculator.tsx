@@ -22,7 +22,8 @@ const Row = styled(Box)``
 Row.defaultProps = {
   display: "flex",
   justifyContent: "space-between",
-  py: 3
+  py: 3,
+  px: 3,
 }
 
 const Calculator: FC<unknown> = () => {
@@ -33,6 +34,7 @@ const Calculator: FC<unknown> = () => {
   const starterPercentRef = useRef<HTMLInputElement>(null)
   const saltPercentRef = useRef<HTMLInputElement>(null)
   const scaleRef = useRef<HTMLInputElement>(null)
+  const recipeInput = storage.recipeInput || DefaultRecipe
 
   const flour = recipe.flour
   const water = recipe.water
@@ -54,7 +56,13 @@ const Calculator: FC<unknown> = () => {
       starterPercent,
       saltPercent,
       scale,
-    }))
+    }), {
+      totalDoughWeight,
+      hydrationPercent,
+      starterPercent,
+      saltPercent,
+      scale,
+    })
   }
 
   return <>
@@ -62,34 +70,34 @@ const Calculator: FC<unknown> = () => {
       <Row>
         Total dough weight
         <Box>
-          <Input defaultValue={DefaultRecipe.totalDoughWeight} ref={totalDoughWeightRef} /> g
+          <Input defaultValue={recipeInput.totalDoughWeight} ref={totalDoughWeightRef} /> g
         </Box>
       </Row>
       <Row>
         Hydration percent
         <Box>
-          <Input min={0} max={100} type="number" defaultValue={DefaultRecipe.hydrationPercent} ref={hydrationPercentRef} /> %
+          <Input min={0} max={100} type="number" defaultValue={recipeInput.hydrationPercent} ref={hydrationPercentRef} /> %
         </Box>
       </Row>
       <Row>
         Starter percent
         <Box>
-          <Input min={0} max={100} type="number" defaultValue={DefaultRecipe.starterPercent} ref={starterPercentRef} /> %
+          <Input min={0} max={100} type="number" defaultValue={recipeInput.starterPercent} ref={starterPercentRef} /> %
         </Box>
       </Row>
       <Row>
         Salt percent
         <Box>
-          <Input min={0} max={1000} type="number" defaultValue={DefaultRecipe.saltPercent} ref={saltPercentRef} /> %
+          <Input min={0} max={1000} type="number" defaultValue={recipeInput.saltPercent} ref={saltPercentRef} /> %
         </Box>
       </Row>
       <Row>
         Scale
         <Box>
-          <Input min={0} max={1000} type="number" defaultValue={DefaultRecipe.scale} ref={scaleRef} /> %
+          <Input min={0} max={1000} type="number" defaultValue={recipeInput.scale} ref={scaleRef} /> %
         </Box>
       </Row>
-      <Box display="flex" justifyItems="center" borderWidth="2px" borderLeftWidth="0px" borderRightWidth="0px" borderColor="#ccc" borderStyle="solid" py={5} my={5}>
+      <Box px={3} display="flex" justifyItems="center" borderWidth="2px" borderLeftWidth="0px" borderRightWidth="0px" borderColor="#ccc" borderStyle="solid" py={5} my={5}>
         <Button width="100%" type="submit">Calculate</Button>
       </Box>
       <Row>
