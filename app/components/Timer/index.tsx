@@ -283,8 +283,6 @@ const Timer: React.FC<{}> = () => {
           </Button>
         </Box>
       </Box>
-
-      <Feedback countEvents={timer.length} start={feedbackEvent.occurredAt} />
     </TickProvider>
   )
 }
